@@ -1,7 +1,30 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": "./src",
+    "paths": {
+      "@app/core/*": [
+        "app/core/*"
+      ],
+      "@app/core/models": [
+        "app/core/models/index"
+      ],
+      "@app/modules/*": [
+        "app/modules/*"
+      ],
+      "@app/models": [
+        "app/shared/models/index"
+      ],
+      "@app/services/*": [
+        "app/shared/services/*"
+      ],
+      "@app/stores/*": [
+        "app/shared/stores/*"
+      ],
+      "@app/env/*": [
+        "environments/*"
+      ]
+    },
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
