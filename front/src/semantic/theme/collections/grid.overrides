@@ -1,0 +1,21 @@
+/*******************************
+         Theme Overrides
+*******************************/
+
+.ui.grid .column[class*="no padding"] {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.ui.grid .row[class*="no padding"] {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.ui[class*="no padding"].grid .row .column:first-child {
+  padding-left: 0;
+}
+
+.ui[class*="no padding"].grid .row .column:last-child {
+  padding-right: 0;
+}

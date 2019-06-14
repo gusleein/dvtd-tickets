@@ -48,6 +48,7 @@
               "src/assets"
             ],
             "styles": [
+              "src/semantic/semantic.less",
               "src/styles.less"
             ],
             "scripts": []

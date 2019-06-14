@@ -1,0 +1,33 @@
+/*******************************
+        Import Directives
+*******************************/
+/*--------------------
+   Site Variables
+---------------------*/
+/* Component's site.variables */
+@import "@{themeFolder}/globals/site.variables";
+/*-------------------
+ Component Variables
+---------------------*/
+/* Theme */
+@import "@{themeFolder}/@{type}s/@{element}.variables";
+
+/*******************************
+             Mix-ins
+*******************************/
+
+/*------------------
+       Fonts
+-------------------*/
+
+.loadFonts() when (@importGoogleFonts) {
+  @import url('@{googleProtocol}fonts.googleapis.com/css?family=@{googleFontRequest}');
+}
+
+/*------------------
+     Overrides
+-------------------*/
+
+.loadUIOverrides() {
+  @import (optional) "@{themeFolder}/@{type}s/@{element}.overrides";
+}

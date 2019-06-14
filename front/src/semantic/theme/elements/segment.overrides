@@ -1,0 +1,11 @@
+/*******************************
+         Theme Overrides
+*******************************/
+
+.ui[class*="no padding"].segment {
+  padding: 0;
+}
+
+.ui[class*="no margin"].segment {
+  margin: 0;
+}
