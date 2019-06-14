@@ -1,0 +1,23 @@
+---
+
+  - name: Creates deploy directory {{DEPLOYPATH}}
+    file: path={{DEPLOYPATH}} state=directory
+
+  - name: Move compiled binary {{PROJECTPATH}}{{SERVICENAME}} to {{DEPLOYPATH}}/{{SERVICENAME}}
+    copy:
+      src={{PROJECTPATH}}{{SERVICENAME}}
+      dest={{DEPLOYPATH}}/{{SERVICENAME}}
+      mode=0744
+
+  - name: Creates config directory {{DEPLOYPATH}}/config
+    file: path={{DEPLOYPATH}}/config state=directory
+
+  - name: Move config file "{{config_name}}.conf" to {{DEPLOYPATH}}/config/{{config_name}}.conf
+    copy:
+      src={{PROJECTPATH}}config/{{config_name}}.conf
+      dest={{DEPLOYPATH}}/config/{{config_name}}.conf
+
+  - name: Move assets dir to {{DEPLOYPATH}}/assets
+    synchronize:
+      src={{PROJECTPATH}}assets/
+      dest={{DEPLOYPATH}}/assets

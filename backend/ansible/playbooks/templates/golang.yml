@@ -1,0 +1,6 @@
+---
+  - name: Ensure GoLang libs for {{SERVICENAME}}, {{ProjectName}}
+    shell: "export GOBIN={{GOPATH}} && export GOPATH={{GOPATH}} && cd {{PROJECTPATH}} && go get"
+
+  - name: Compile BIN for {{SERVICENAME}}, {{ProjectName}}
+    shell: "export GOBIN={{GOPATH}} && export GOPATH={{GOPATH}} && cd {{PROJECTPATH}} && export GOPATH={{GOPATH}} && GOOS={{target}} GOARCH={{arch}} go build -o {{SERVICENAME}} ./server.go"

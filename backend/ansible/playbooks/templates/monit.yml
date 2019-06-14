@@ -1,0 +1,20 @@
+---
+
+  - name: Deliver monit script for {{SERVICENAME}}
+    template:
+      src={{PROJECTPATH}}/ansible/monit/monit.j2
+      dest=/etc/monit/conf.d/{{SERVICENAME}}
+      mode=0644
+
+  - name: Stop monit
+    service:
+      name=monit
+      state=stopped
+
+  - name: Kill previous process "{{SERVICENAME}}" (if any)
+    shell: kill -9 $(ps -ef|grep "{{SERVICENAME}}"|grep -v "grep"|awk '{print $2}') || true
+
+  - name: Start monit
+    service:
+      name=monit
+      state=started

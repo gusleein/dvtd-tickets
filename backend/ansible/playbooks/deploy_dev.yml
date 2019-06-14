@@ -1,0 +1,22 @@
+---
+- name: Compile
+  hosts: localhost
+  vars:
+    target: linux
+    arch: amd64
+  vars_files:
+    - ../vars.yml
+  gather_facts: False
+  tasks:
+    - include: templates/golang.yml
+
+- name: Distribute dev
+  hosts: dev
+  vars:
+    config_name: dev
+  vars_files:
+    - ../vars.yml
+  gather_facts: True
+  tasks:
+    - include: templates/distribute.yml
+    - include: templates/monit.yml

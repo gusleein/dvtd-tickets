@@ -1,0 +1,4 @@
+check process {{SERVICENAME}}
+	matching "{{SERVICENAME}}"
+	start program = "/bin/bash -c 'cd {{ DEPLOYPATH }} && nohup ./{{SERVICENAME}} {{config_name}} > /dev/null 2>&1 &'"
+	stop program = "/usr/bin/pkill -9 -x {{SERVICENAME}}"

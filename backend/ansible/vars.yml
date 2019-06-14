@@ -1,0 +1,8 @@
+---
+ProjectName: books_backend
+
+
+PROJECTPATH: ../../
+GOPATH: "{{ lookup('env', 'GOPATH')}}"
+DEPLOYPATH: "~/go/{{ProjectName}}"
+SERVICENAME: "{{ProjectName}}_service"

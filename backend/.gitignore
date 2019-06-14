@@ -1,0 +1,8 @@
+.idea
+/books_backend_service
+
+*.retry
+
+# System Files
+.DS_Store
+Thumbs.db
