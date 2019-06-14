@@ -1,5 +1,5 @@
 [dev]
-dev1   ansible_connection=ssh ansible_ssh_host=165.227.144.111 ansible_ssh_user=root
+dev1   ansible_connection=ssh ansible_ssh_host=134.209.253.22 ansible_ssh_user=root
 
 [prod]
-prod1  ansible_connection=ssh ansible_ssh_host=app.mglk.ru ansible_ssh_user=root ansible_port=1080
+prod1  ansible_connection=ssh ansible_ssh_host=134.209.253.22 ansible_ssh_user=root ansible_port=1080
