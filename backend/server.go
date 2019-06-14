@@ -24,7 +24,7 @@ func main() {
 		Handler:            aw.Handler,
 		MaxRequestBodySize: 100 * 1024 * 1024,
 	}
-	go adminFileServer.ListenAndServe(config.Local.Get("adminFileHost"))
+	go adminFileServer.ListenAndServe(config.Local.Get("frontFileHost"))
 
 	// run http api server
 	r := fasthttprouter.New()
@@ -67,13 +67,13 @@ func index(ctx *fasthttp.RequestCtx, _ fasthttprouter.Params) {
 	uri := string(ctx.RequestURI())
 
 	// проверяем папку с приложением
-	filePath := config.Local.Get("adminDir") + uri
+	filePath := config.Local.Get("frontDir") + uri
 	if _, err := os.Stat(filePath); err == nil && uri != "/" {
 		fasthttp.ServeFile(ctx, filePath)
 		return
 	}
 
-	fasthttp.ServeFile(ctx, config.Local.Get("adminDir")+"/index.html")
+	fasthttp.ServeFile(ctx, config.Local.Get("frontDir")+"/index.html")
 }
 
 func options(ctx *fasthttp.RequestCtx, _ fasthttprouter.Params) {
