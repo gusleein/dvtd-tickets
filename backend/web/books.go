@@ -7,10 +7,10 @@ import (
 	"github.com/valyala/fasthttprouter"
 )
 
-func ArticlesList(ctx *fasthttp.RequestCtx, _ fasthttprouter.Params) {
+func BooksList(ctx *fasthttp.RequestCtx, _ fasthttprouter.Params) {
 	lu := int(ctx.QueryArgs().GetUintOrZero("lu"))
 	log.Debug(lu, string(ctx.Request.Header.Peek("_t")))
-	result, err := db.Articles.List(lu)
+	result, err := db.Books.List(lu)
 	if err != nil {
 		helpers.OutputJsonMessageResult(ctx, 500, err.Error())
 		return
@@ -18,10 +18,10 @@ func ArticlesList(ctx *fasthttp.RequestCtx, _ fasthttprouter.Params) {
 	helpers.OutputJSON(ctx, 200, result)
 }
 
-func ArticlesView(ctx *fasthttp.RequestCtx, _ fasthttprouter.Params) {
+func BooksView(ctx *fasthttp.RequestCtx, _ fasthttprouter.Params) {
 	link := string(ctx.QueryArgs().Peek("link"))
 	log.Debug(link, string(ctx.Request.Header.Peek("_t")))
-	result, err := db.Articles.GetByLink(link)
+	result, err := db.Books.GetByLink(link)
 	if err != nil {
 		helpers.OutputJsonMessageResult(ctx, 500, err.Error())
 		return

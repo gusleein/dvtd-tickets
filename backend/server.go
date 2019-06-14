@@ -38,21 +38,21 @@ func main() {
 	r.POST("/user/save", web.Auth(web.UserSave))
 	r.OPTIONS("/user/save", options)
 
-	r.GET("/articles/list", web.ArticlesList)
-	r.OPTIONS("/articles/list", options)
+	r.GET("/books/list", web.BooksList)
+	r.OPTIONS("/books/list", options)
 
-	r.GET("/articles/all", web.Auth(web.ArticlesAll))
-	r.OPTIONS("/articles/all", options)
+	r.GET("/books/all", web.Auth(web.BooksAll))
+	r.OPTIONS("/books/all", options)
 
-	r.GET("/articles/view", web.ArticlesView)
-	r.OPTIONS("/articles/view", options)
+	r.GET("/books/view", web.BooksView)
+	r.OPTIONS("/books/view", options)
 
 	// admin
-	r.POST("/articles/save", web.Admin(web.ArticlesSave))
-	r.OPTIONS("/articles/save", options)
+	r.POST("/books/save", web.Admin(web.BooksSave))
+	r.OPTIONS("/books/save", options)
 
-	r.POST("/articles/delete", web.Admin(web.ArticlesDelete))
-	r.OPTIONS("/articles/delete", options)
+	r.POST("/books/delete", web.Admin(web.BooksDelete))
+	r.OPTIONS("/books/delete", options)
 
 	log.Info("Run HTTP server on " + config.Local.Get("serverHost"))
 	server := &fasthttp.Server{
