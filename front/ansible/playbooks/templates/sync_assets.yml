@@ -1,0 +1,7 @@
+- name: Creates deploy directory {{DEPLOY_ASSETS}}
+  file: path={{DEPLOY_ASSETS}} state=directory
+
+- name: Sync ASSETS with Remote Machine {{ DEPLOY_ASSETS }}
+  synchronize:
+    src={{ASSETSPATH}}
+    dest={{DEPLOY_ASSETS}}/

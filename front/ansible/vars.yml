@@ -1,0 +1,8 @@
+---
+PROJECTPATH: ../../
+
+SOURCEPATH: "{{PROJECTPATH}}/dist/front/"
+ASSETSPATH: "{{PROJECTPATH}}/src/assets/"
+
+DEPLOY_APP:     "~/go/books/front"
+DEPLOY_ASSETS:  "~/go/books/front/assets"

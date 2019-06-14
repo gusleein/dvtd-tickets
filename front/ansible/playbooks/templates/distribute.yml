@@ -1,0 +1,12 @@
+- name: Creates deploy directory {{DEPLOY_APP}}
+  file: path={{DEPLOY_APP}} state=directory
+
+#- name: Clear destination path "adminFront"
+#  file:
+#    state: absent
+#    path: "{{ DEPLOY_APP }}/adminFront/"
+
+- name: Move APP files to Remote Machine {{ DEPLOY_APP }}
+  synchronize:
+    src={{SOURCEPATH}}
+    dest={{DEPLOY_APP}}/

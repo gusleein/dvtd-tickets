@@ -1,0 +1,19 @@
+---
+- name: Compile
+  hosts: localhost
+  vars:
+    env: prod
+  vars_files:
+    - ../vars.yml
+  gather_facts: False
+  tasks:
+  - include: templates/front_prod.yml
+
+- name: Distribute & Sync Assets
+  hosts: prod
+  vars_files:
+    - ../vars.yml
+  gather_facts: True
+  tasks:
+  - include: templates/distribute.yml
+  - include: templates/sync_assets.yml

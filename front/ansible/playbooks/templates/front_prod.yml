@@ -1,0 +1,5 @@
+  - name: Install npm modules...
+    shell: "cd {{ PROJECTPATH }} && npm install"
+
+  - name: Compile angular project {{ PROJECTPATH }}
+    shell: "cd {{ PROJECTPATH }} && ng build ---prod"
