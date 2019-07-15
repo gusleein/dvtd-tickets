@@ -1,0 +1,120 @@
+@import "../../../../../semantic/theme/globals/site.variables";
+
+.ui-wrapper-mobile {
+  @media (max-width: @tabletBreakpoint) {
+    width: 100% !important;
+  }
+}
+
+.auth-form {
+  width: @100px * 3;
+  margin: auto;
+  @media (max-width: @tabletBreakpoint) {
+    padding-bottom: @30px;
+  }
+}
+
+.auth {
+  padding-top: @50px * 2; // 100px
+  @media (max-width: @tabletBreakpoint) {
+    padding-top: @50px;
+  }
+
+  .ui.grid {
+    @media (max-width: @tabletBreakpoint) {
+      margin-right: 0 !important;
+      margin-left: 0 !important;
+    }
+  }
+
+  .image.wide.column {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .form.wide.column {
+    padding-right: @28px;
+    padding-left: @28px;
+    background: @darkTwo;
+
+    @media (max-width: @tabletBreakpoint) {
+      width: 100% !important;
+      padding-right: @56px;
+      padding-left: @56px;
+    }
+  }
+
+  .welcome-text {
+    position: absolute;
+    z-index: 100;
+    width: @61px * 4; // 244px
+    bottom: @35px;
+    left: @36px;
+
+    .header {
+      font-size: @massive;
+      letter-spacing: 0.07em;
+      padding-bottom: @24px;
+    }
+
+    .content {
+      letter-spacing: 0.05em;
+      opacity: 0.7;
+      font-size: @large;
+    }
+  }
+}
+
+:host ::ng-deep .auth-form {
+  padding-top: @30px;
+
+  .label {
+    color: @blueyGrey;
+    font-weight: 200;
+    letter-spacing: @1px;
+    font-size: @mini;
+  }
+
+  .header {
+    padding-bottom: @40px;
+
+    .logo {
+      width: @64px + @14px; // 88px
+      float: right;
+      vertical-align: bottom;
+    }
+
+    .text {
+      font-size: @large;
+      letter-spacing: @1px;
+      font-weight: 200;
+      float: left;
+      vertical-align: bottom;
+    }
+  }
+
+  .footer {
+    padding-top: @15px;
+    padding-bottom: @15px;
+    text-align: center;
+
+    .link {
+      margin-bottom: @10px;
+    }
+
+    .ui.secondary.button {
+      margin-top: @30px;
+    }
+  }
+
+  .body {
+    .loader-icon {
+      text-align: center;
+      font-weight: 100;
+      font-size: @massive / 1.5;
+      color: @orange;
+      padding-top: @55px;
+      padding-bottom: @10px;
+    }
+  }
+}

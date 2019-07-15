@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  endpoint: 'http://134.209.253.22:3010',
+  endpoint: 'http://localhost:3010',
 };
 
 /*

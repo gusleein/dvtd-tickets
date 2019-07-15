@@ -8,14 +8,14 @@ import (
 )
 
 type Book struct {
-	Id       bson.ObjectId `json:"id" bson:"_id,omitempty"`
-	Link     string        `json:"link"`
-	Title    string        `json:"title"`
-	Content  string        `json:"content"`
-	Section  string        `json:"section"`
-	Show     bool          `json:"show"`
-	DateTime int64         `json:"dateTime"`
-	ModTime  int64         `json:"modTime"`
+	Id        bson.ObjectId `json:"id" bson:"_id,omitempty"`
+	Link      string        `json:"link"`
+	Title     string        `json:"title"`
+	Content   string        `json:"content"`
+	Section   string        `json:"section"`
+	Show      bool          `json:"show"`
+	CreatedAt int64         `json:"createdAt"`
+	ModifyAt  int64         `json:"modifyAt"`
 }
 
 func (books) All(lu int) (list []Book, err error) {
@@ -40,7 +40,7 @@ func (books) GetByLink(link string) (book Book, err error) {
 }
 
 func (o Book) Save() (err error) {
-	o.ModTime = time.Now().Unix()
+	o.ModifyAt = time.Now().Unix()
 	if len(o.Id) == 0 {
 		o.Id = bson.NewObjectId()
 	}

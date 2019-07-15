@@ -3,25 +3,25 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "paths": {
-      "@app/core/*": [
-        "app/core/*"
+      "@core/*": [
+        "app/modules/core/*"
       ],
-      "@app/core/models": [
-        "app/core/models/index"
-      ],
-      "@app/modules/*": [
+      "@modules/*": [
         "app/modules/*"
       ],
-      "@app/models": [
+      "@models": [
         "app/shared/models/index"
       ],
-      "@app/services/*": [
+      "@types": [
+        "app/shared/types"
+      ],
+      "@services/*": [
         "app/shared/services/*"
       ],
-      "@app/stores/*": [
+      "@stores/*": [
         "app/shared/stores/*"
       ],
-      "@app/env/*": [
+      "@env/*": [
         "environments/*"
       ]
     },
