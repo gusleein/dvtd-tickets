@@ -7,7 +7,7 @@ import {ModalService} from "../../shared/services/modal.service";
     <div #modalPlaceholder></div>`
 })
 export class ModalPlaceholderComponent implements OnInit {
-  @ViewChild('modalPlaceholder', {read: ViewContainerRef, static: false}) viewContainerRef;
+  @ViewChild('modalPlaceholder', {read: ViewContainerRef, static: true}) viewContainerRef;
 
   constructor(private modalService: ModalService, private injector: Injector) {
 
