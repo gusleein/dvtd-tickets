@@ -1,9 +1,9 @@
 import {Component, Input} from "@angular/core";
-import {Modal} from "./custom-modal.module";
-import {CustomModalComponent} from "./custom-modal.component";
+import {CustomModalComponent} from "./components/custom-modal/custom-modal.component";
+import {Modal} from "./components/custom-modal/custom-modal.container";
 
 @Component({
-  selector: 'app-modal, ui-modal',
+  selector: 'app-modal, ui-modal, uiModal',
   template: `
     <div class="ui dimmer modals transition visible active ui-modal">
       <div class="ui modal">
@@ -28,15 +28,9 @@ import {CustomModalComponent} from "./custom-modal.component";
       </div>
     </div>
   `,
-  styleUrls: ['./modal.component.less'],
-  exportAs: 'modal',
+  exportAs: 'uiModal',
 })
 @Modal()
 export class ModalComponent extends CustomModalComponent {
   @Input() isLoading = false;
-
-  constructor() {
-    super()
-  }
-
 }

@@ -1,14 +1,13 @@
 import {Component, Injector, OnInit, ViewChild, ViewContainerRef} from "@angular/core";
-
-import {ModalService} from "./modal.service";
+import {ModalService} from "../../shared/services/modal.service";
 
 @Component({
-  selector: 'modal-placeholder, modalPlaceholder',
+  selector: 'ui-modal-placeholder, uiModalPlaceholder',
   template: `
     <div #modalPlaceholder></div>`
 })
 export class ModalPlaceholderComponent implements OnInit {
-  @ViewChild('modalPlaceholder', {read: ViewContainerRef, static: true}) viewContainerRef;
+  @ViewChild('modalPlaceholder', {read: ViewContainerRef, static: false}) viewContainerRef;
 
   constructor(private modalService: ModalService, private injector: Injector) {
 
