@@ -4,7 +4,6 @@ import (
 	"../db"
 	"../helpers"
 	"../smsAero"
-	"github.com/AlexeySpiridonov/goapp-config"
 	"github.com/valyala/fasthttp"
 	"github.com/valyala/fasthttprouter"
 )
@@ -13,7 +12,7 @@ func UserAuth(ctx *fasthttp.RequestCtx, _ fasthttprouter.Params) {
 	item := db.User{}
 	helpers.JsonUnmarshal(string(ctx.Request.Body()), &item)
 	log.Debug(item)
-	code, err := db.Users.Auth(item.Name,
+	code, err := db.Users.Auth(
 		helpers.PreparePhone(item.Phone),
 		helpers.GetMD5Hash(item.Password),
 		item.Os,
@@ -25,9 +24,9 @@ func UserAuth(ctx *fasthttp.RequestCtx, _ fasthttprouter.Params) {
 		return
 	}
 
-	if config.GetEnv() != "dev" {
-		smsAero.Send(helpers.PreparePhone(item.Phone), "Ваш код входа: "+code)
-	}
+	// if config.GetEnv() != "dev" {
+	smsAero.Send(helpers.PreparePhone(item.Phone), "Ваш код входа: "+code)
+	// }
 
 	helpers.OutputJSON(ctx, 200, true)
 }
@@ -55,7 +54,6 @@ func UserSave(ctx *fasthttp.RequestCtx, user db.User) {
 	helpers.JsonUnmarshal(string(ctx.Request.Body()), &item)
 	log.Debug(item, user.Id)
 
-	user.Name = item.Name
 	user.Email = item.Email
 	user.Save()
 	helpers.OutputJSON(ctx, 200, user)

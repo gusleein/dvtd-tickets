@@ -5,7 +5,6 @@ import (
 	"time"
 
 	"../helpers"
-	"github.com/AlexeySpiridonov/goapp-config"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -13,7 +12,6 @@ import (
 type User struct {
 	Id          bson.ObjectId `json:"id" bson:"_id,omitempty"`
 	Email       string        `json:"email"`
-	Name        string        `json:"name"`
 	Phone       string        `json:"phone"`
 	Password    string        `json:"-"`
 	Token       string        `json:"token"`
@@ -77,14 +75,9 @@ func (users) Confirm(phone, code string) (user User, err error) {
 	return
 }
 
-func (users) Auth(Name, Phone, Password, Os, Version, Device string) (code string, err error) {
+func (users) Auth(Phone, Password, Os, Version, Device string) (code string, err error) {
 	if len(Phone) < 5 {
 		err = errors.New("Empty phone")
-		log.Error(err)
-		return
-	}
-	if len(Name) < 1 {
-		err = errors.New("Empty name")
 		log.Error(err)
 		return
 	}
@@ -99,7 +92,6 @@ func (users) Auth(Name, Phone, Password, Os, Version, Device string) (code strin
 	refresh("user", err)
 	if err != nil {
 		user.Id = bson.NewObjectId()
-		user.Name = Name
 		user.Phone = Phone
 		user.Password = Password
 		user.CreatedAt = time.Now().Unix()
@@ -109,9 +101,9 @@ func (users) Auth(Name, Phone, Password, Os, Version, Device string) (code strin
 	code = helpers.StringWithIntset(5)
 
 	code2 := code
-	if config.GetEnv() == "dev" {
-		code2 = "00000"
-	}
+	// if config.GetEnv() == "dev" {
+	// 	code2 = "00000"
+	// }
 
 	err = DBUsers.UpdateId(user.Id, bson.M{"$set": bson.M{"code": code2, "os": Os, "version": Version, "device": Device}})
 	if err != nil {
