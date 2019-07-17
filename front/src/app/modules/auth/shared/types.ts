@@ -8,7 +8,6 @@
 export interface AuthSignInData {
   phone: string;
   password: string;
-  name: string;
 }
 
 export interface AuthPhoneConfirmData {

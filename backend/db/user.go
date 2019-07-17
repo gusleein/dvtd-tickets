@@ -90,7 +90,16 @@ func (users) Auth(Phone, Password, Os, Version, Device string) (code string, err
 	err = DBUsers.Find(bson.M{"phone": Phone}).One(&user)
 	log.Debug(user)
 	refresh("user", err)
-	if err != nil {
+
+	if err == nil {
+		// найден пользователь, проверяем пароль
+		if user.Password != Password {
+			err = errors.New("Неверный логин или пароль")
+			log.Error(err)
+			return
+		}
+	} else {
+		// иначе создаем нового
 		user.Id = bson.NewObjectId()
 		user.Phone = Phone
 		user.Password = Password

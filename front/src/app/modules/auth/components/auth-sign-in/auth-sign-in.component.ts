@@ -46,9 +46,11 @@ export class AuthSignInComponent {
 
   onSuccessPassword(password: string) {
     this.authData.password = password;
-    this.authData.name = 'Admin';
-    this.isSubmitting = true;
+    this.sendAuthData();
+  }
 
+  sendAuthData() {
+    this.isSubmitting = true;
     this.auth.signIn(this.authData)
       .then(() => {
         this.isSubmitting = false;
