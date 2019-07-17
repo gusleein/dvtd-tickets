@@ -15,6 +15,7 @@ func UserAuth(ctx *fasthttp.RequestCtx, _ fasthttprouter.Params) {
 	log.Debug(item)
 	code, err := db.Users.Auth(item.Name,
 		helpers.PreparePhone(item.Phone),
+		helpers.GetMD5Hash(item.Password),
 		item.Os,
 		item.Version,
 		item.Device)

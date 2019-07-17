@@ -15,6 +15,7 @@ type User struct {
 	Email       string        `json:"email"`
 	Name        string        `json:"name"`
 	Phone       string        `json:"phone"`
+	Password    string        `json:"-"`
 	Token       string        `json:"token"`
 	Os          string        `json:"os"`
 	Version     string        `json:"version"`
@@ -76,7 +77,7 @@ func (users) Confirm(phone, code string) (user User, err error) {
 	return
 }
 
-func (users) Auth(Name, Phone, Os, Version, Device string) (code string, err error) {
+func (users) Auth(Name, Phone, Password, Os, Version, Device string) (code string, err error) {
 	if len(Phone) < 5 {
 		err = errors.New("Empty phone")
 		log.Error(err)
@@ -84,6 +85,11 @@ func (users) Auth(Name, Phone, Os, Version, Device string) (code string, err err
 	}
 	if len(Name) < 1 {
 		err = errors.New("Empty name")
+		log.Error(err)
+		return
+	}
+	if len(Password) < 1 {
+		err = errors.New("Empty password")
 		log.Error(err)
 		return
 	}
@@ -95,6 +101,7 @@ func (users) Auth(Name, Phone, Os, Version, Device string) (code string, err err
 		user.Id = bson.NewObjectId()
 		user.Name = Name
 		user.Phone = Phone
+		user.Password = Password
 		user.CreatedAt = time.Now().Unix()
 		err = DBUsers.Insert(user)
 	}
