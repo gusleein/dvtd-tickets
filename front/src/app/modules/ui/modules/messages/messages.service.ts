@@ -6,12 +6,15 @@ import {Subject} from "rxjs/Subject";
 
 import {Alert, AlertType} from "./models/messages.model";
 
-export const ALERT_TIMEOUT_MS = 3000;
+export const ALERT_TIMEOUT_MS = 5000;
 
 @Injectable()
 export class MessagesService {
-  private subject = new Subject<Alert>();
+  private subject$ = new Subject<Alert>();
+  private clear$ = new Subject<number>();
   private keepAfterRouteChange = false;
+
+  index: number = 0;
 
   constructor(private router: Router) {
     router.events.subscribe(event => {
@@ -19,43 +22,64 @@ export class MessagesService {
         if (this.keepAfterRouteChange) {
           this.keepAfterRouteChange = false;
         } else {
-          this.clear();
+          this.clearAll();
         }
       }
     });
   }
 
   getAlert(): Observable<any> {
-    return this.subject.asObservable();
+    return this.subject$.asObservable();
+  }
+
+  clearAlert(): Observable<any> {
+    return this.clear$.asObservable();
   }
 
   success(message: string, title = 'Great success', keepAfterRouteChange = false) {
-    this.alert(AlertType.Success, message, title, keepAfterRouteChange);
-    setTimeout(() => {
-      this.clear();
-    }, ALERT_TIMEOUT_MS);
+    let a = new Alert(<Alert>{
+      type: AlertType.Success,
+      message: message,
+      title: title,
+      index: this.index
+    });
+    this.alert(a, keepAfterRouteChange);
+    this.clearTimeout(a);
   }
 
   error(message: string, title = 'Fatal error', keepAfterRouteChange = false) {
-    this.alert(AlertType.Error, message, title, keepAfterRouteChange);
-    setTimeout(() => {
-      this.clear();
-    }, ALERT_TIMEOUT_MS);
+    let a = new Alert(<Alert>{
+      type: AlertType.Error,
+      message: message,
+      title: title,
+      index: this.index
+    });
+    this.alert(a, keepAfterRouteChange);
+    this.clearTimeout(a)
   }
 
   info(message: string, title = 'Important information', keepAfterRouteChange = false) {
-    this.alert(AlertType.Info, message, title, keepAfterRouteChange);
-    setTimeout(() => {
-      this.clear();
-    }, ALERT_TIMEOUT_MS);
+    let a = new Alert(<Alert>{
+      type: AlertType.Info,
+      message: message,
+      title: title,
+      index: this.index
+    });
+    this.alert(a, keepAfterRouteChange);
+    this.clearTimeout(a)
   }
 
-  private alert(type: AlertType, message: string, title: string, keepAfterRouteChange = false) {
+  private alert(alert: Alert, keepAfterRouteChange = false) {
     this.keepAfterRouteChange = keepAfterRouteChange;
-    this.subject.next(<Alert>{type: type, message: message, title: title});
+    this.subject$.next(alert);
+    this.index++;
   }
 
-  private clear() {
-    this.subject.next();
+  private clearAll() {
+    this.subject$.next();
+  }
+
+  private clearTimeout(a: Alert) {
+    setTimeout(() => this.clear$.next(a.index), ALERT_TIMEOUT_MS);
   }
 }

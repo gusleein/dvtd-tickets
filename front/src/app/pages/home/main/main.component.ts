@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CustomModalService} from "@modules/ui/modules/modal/shared/services/custom-modal.service";
 import {HomeModalComponent} from "../home-modal/home-modal.component";
+import {MessagesService} from "@modules/ui/modules/messages/messages.service";
 
 @Component({
   selector: 'app-main',
@@ -21,8 +22,20 @@ import {HomeModalComponent} from "../home-modal/home-modal.component";
       <li>
         <h2><a (click)="openModal()">Modal</a></h2>
       </li>
+      <li>
+        Messages
+        <ul>
+          <li>
+            <h2><a (click)="successMessage()">Success</a></h2>
+          </li>
+          <li>
+            <h2><a (click)="errorMessage()">Error</a></h2>
+          </li>
+        </ul>
+      </li>
     </ul>
     <uiModalPlaceholder></uiModalPlaceholder>
+    <uiMessages></uiMessages>
   `,
   styles: []
 })
@@ -30,7 +43,8 @@ export class MainComponent implements OnInit {
 
   title = 'front';
 
-  constructor(private modal: CustomModalService) {
+  constructor(private modal: CustomModalService,
+              private messages: MessagesService) {
   }
 
   ngOnInit() {
@@ -38,5 +52,13 @@ export class MainComponent implements OnInit {
 
   openModal() {
     this.modal.create(HomeModalComponent, {})
+  }
+
+  successMessage() {
+    this.messages.success("hello!")
+  }
+
+  errorMessage() {
+    this.messages.error("hello!")
   }
 }

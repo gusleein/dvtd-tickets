@@ -1,17 +1,36 @@
 @import "../../../../../../semantic/theme/globals/site.variables";
 
 .messages {
+  display: block;
+  position: fixed;
+  right: @29px;
+  bottom: @45px;
+  z-index: 99999;
+}
+
+.message {
   display: flex;
   width: @50px*5 + @22px;
   height: @60px + @16px;
   background: #2c3747;
   border-radius: @4px;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   align-items: center;
-  position: fixed;
-  right: @29px;
-  bottom: @45px;
-  z-index: 99999;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-top: 0.5rem;
+
+  .close.icon {
+    position: absolute;
+    align-self: flex-start;
+    cursor: pointer;
+    right: 0.1rem;
+    margin-top: 0.3rem;
+
+    &:hover {
+      color: @orange;
+    }
+  }
 }
 
 .fa-exclamation-triangle {
@@ -28,10 +47,21 @@
 
 .icon {
   font-size: @23px;
+  padding-right: 0.5rem;
 }
 
 .content {
   p {
     margin-bottom: @6px;
+  }
+}
+
+.clear.all {
+  cursor: pointer;
+  display: inline-block;
+  float: right;
+
+  &:hover {
+    color: @orange;
   }
 }

@@ -4,7 +4,8 @@ import {CustomModalService} from "../../shared/services/custom-modal.service";
 @Component({
   selector: 'ui-modal-placeholder, uiModalPlaceholder',
   template: `
-    <div #modalPlaceholder></div>`
+    <div #modalPlaceholder></div>`,
+  exportAs: 'uiModalPlaceholder'
 })
 export class ModalPlaceholderComponent implements OnInit {
   @ViewChild('modalPlaceholder', {read: ViewContainerRef, static: true}) viewContainerRef;

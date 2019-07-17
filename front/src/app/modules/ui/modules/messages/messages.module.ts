@@ -3,6 +3,7 @@ import {CommonModule} from "@angular/common";
 import {RouterModule} from "@angular/router";
 
 import {MessagesComponent} from "./components/messages.component";
+import {MessagesService} from "@modules/ui/modules/messages/messages.service";
 
 const UI_COMPONENTS = [
   MessagesComponent
@@ -15,7 +16,7 @@ const UI_COMPONENTS = [
   ],
   declarations: UI_COMPONENTS,
   exports: UI_COMPONENTS,
-  providers: [],
+  providers: [MessagesService],
 })
 export class MessagesModule {
 }
