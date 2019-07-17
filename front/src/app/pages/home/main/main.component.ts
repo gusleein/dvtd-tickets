@@ -23,13 +23,16 @@ import {MessagesService} from "@modules/ui/modules/messages/messages.service";
         <h2><a (click)="openModal()">Modal</a></h2>
       </li>
       <li>
-        Messages
+        <h2>Messages</h2>
         <ul>
           <li>
             <h2><a (click)="successMessage()">Success</a></h2>
           </li>
           <li>
             <h2><a (click)="errorMessage()">Error</a></h2>
+          </li>
+          <li>
+            <h2><a (click)="infoMessage()">Info</a></h2>
           </li>
         </ul>
       </li>
@@ -60,5 +63,9 @@ export class MainComponent implements OnInit {
 
   errorMessage() {
     this.messages.error("hello!")
+  }
+
+  infoMessage() {
+    this.messages.info("hello!")
   }
 }
