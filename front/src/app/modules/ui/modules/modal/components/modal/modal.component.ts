@@ -1,13 +1,13 @@
 import {Component, Input} from "@angular/core";
-import {CustomModalComponent} from "./components/custom-modal/custom-modal.component";
-import {Modal} from "./components/custom-modal/custom-modal.container";
+import {CustomModalComponent} from "../custom-modal/custom-modal.component";
+import {Modal} from "../custom-modal/custom-modal.container";
 
 @Component({
-  selector: 'app-modal, ui-modal, uiModal',
+  selector: 'ui-modal, uiModal',
   template: `
     <div class="ui dimmer modals transition visible active ui-modal">
       <div class="ui modal">
-        <ng-content select="[modal-icon]"></ng-content>
+        <ng-content select="[modal-icon]" (click)="onCancel()"></ng-content>
         <div class="header">
           <ng-content select="[modal-header]"></ng-content>
         </div>

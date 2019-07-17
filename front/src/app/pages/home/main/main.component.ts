@@ -16,13 +16,18 @@ import {Component, OnInit} from '@angular/core';
       <li>
         <h2><a rel="noopener" [routerLink]="['auth']">Auth</a></h2>
       </li>
+      <li>
+        <h2><a (click)="openModal()">Modal</a></h2>
+      </li>
     </ul>
+    <homeModal [open]="isOpen"></homeModal>
   `,
   styles: []
 })
 export class MainComponent implements OnInit {
 
   title = 'front';
+  isOpen = false;
 
   constructor() {
   }
@@ -30,4 +35,7 @@ export class MainComponent implements OnInit {
   ngOnInit() {
   }
 
+  openModal() {
+    this.isOpen = true;
+  }
 }

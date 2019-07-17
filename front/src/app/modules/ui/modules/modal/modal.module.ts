@@ -1,20 +1,19 @@
 import {NgModule} from "@angular/core";
 
 import {CommonModule} from "@angular/common";
-import {ModalComponent} from "./modal.component";
-import {ModalService} from "@modules/ui/modules/modal/shared/services/modal.service";
-import {CustomModalComponent} from "@modules/ui/modules/modal/components/custom-modal/custom-modal.component";
-import {ModalPlaceholderComponent} from "@modules/ui/modules/modal/components/modal-placeholder/modal-placeholder.component";
+import {ModalComponent} from "./components/modal/modal.component";
 
 @NgModule({
-  imports: [CommonModule],
+  imports: [
+    CommonModule
+  ],
   declarations: [
     ModalComponent,
-    CustomModalComponent,
-    ModalPlaceholderComponent,
   ],
-  exports: [ModalComponent],
-  providers: [ModalService]
+  exports: [
+    ModalComponent,
+  ],
+  providers: []
 })
 export class ModalModule {
 }
