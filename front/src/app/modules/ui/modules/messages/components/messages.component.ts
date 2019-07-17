@@ -25,7 +25,7 @@ import {MessagesService} from "../messages.service";
         </div>
         <i class="close small icon" (click)="clearAlert(alert.index)"></i>
       </div>
-      <div class="clear all" (click)="clearAllAlerts()"><i class="close small icon"></i>&nbsp;&nbsp;clear all</div>
+      <div class="clear all" (click)="clearAllAlerts()">clear all&nbsp;&nbsp;<i class="close small icon"></i></div>
     </div>
   `,
   exportAs: 'uiMessages',
