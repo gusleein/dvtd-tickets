@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
 
-import {ModalService} from "../../shared/services/modal.service";
+import {CustomModalService} from "../../shared/services/custom-modal.service";
 import {ModalPlaceholderComponent} from "./modal-placeholder.component";
 
 @NgModule({
@@ -11,7 +11,7 @@ import {ModalPlaceholderComponent} from "./modal-placeholder.component";
     ModalPlaceholderComponent
   ],
   providers: [
-    ModalService
+    CustomModalService
   ]
 })
 export class CustomModalModule {

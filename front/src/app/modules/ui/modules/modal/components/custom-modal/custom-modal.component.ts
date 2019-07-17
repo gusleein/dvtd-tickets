@@ -6,15 +6,13 @@ export class CustomModalComponent {
   @HostListener('window:keyup', ['$event']) keyEvent(e: KeyboardEvent) {
     // Escape - закрыть окно
     if (e.code === 'Escape') {
-      this.closeModal()
+      this.onCancel()
     }
   }
 
   destroy: Function;
-  closeModal: Function;
 
   onCancel() {
-    this.closeModal();
     this.destroy();
   }
 }

@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {CustomModalService} from "@modules/ui/modules/modal/shared/services/custom-modal.service";
+import {HomeModalComponent} from "../home-modal/home-modal.component";
 
 @Component({
   selector: 'app-main',
@@ -20,22 +22,21 @@ import {Component, OnInit} from '@angular/core';
         <h2><a (click)="openModal()">Modal</a></h2>
       </li>
     </ul>
-    <homeModal [open]="isOpen"></homeModal>
+    <uiModalPlaceholder></uiModalPlaceholder>
   `,
   styles: []
 })
 export class MainComponent implements OnInit {
 
   title = 'front';
-  isOpen = false;
 
-  constructor() {
+  constructor(private modal: CustomModalService) {
   }
 
   ngOnInit() {
   }
 
   openModal() {
-    this.isOpen = true;
+    this.modal.create(HomeModalComponent, {})
   }
 }

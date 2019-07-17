@@ -1,5 +1,5 @@
 import {Component, Injector, OnInit, ViewChild, ViewContainerRef} from "@angular/core";
-import {ModalService} from "../../shared/services/modal.service";
+import {CustomModalService} from "../../shared/services/custom-modal.service";
 
 @Component({
   selector: 'ui-modal-placeholder, uiModalPlaceholder',
@@ -9,7 +9,7 @@ import {ModalService} from "../../shared/services/modal.service";
 export class ModalPlaceholderComponent implements OnInit {
   @ViewChild('modalPlaceholder', {read: ViewContainerRef, static: true}) viewContainerRef;
 
-  constructor(private modalService: ModalService, private injector: Injector) {
+  constructor(private modalService: CustomModalService, private injector: Injector) {
 
   }
 

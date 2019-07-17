@@ -11,7 +11,7 @@ import {ModalModule} from "@modules/ui/modules/modal/modal.module";
   declarations: [
     HomeModalComponent
   ],
-  exports: [
+  entryComponents: [
     HomeModalComponent
   ],
 })

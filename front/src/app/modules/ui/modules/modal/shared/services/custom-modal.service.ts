@@ -3,7 +3,7 @@ import {ComponentFactoryResolver, ComponentRef, Injectable, Injector, ViewContai
 import {Observable, ReplaySubject} from "rxjs";
 
 @Injectable()
-export class ModalService {
+export class CustomModalService {
   private vcRef: ViewContainerRef;
   private injector: Injector;
   public activeInstances = 0;

@@ -1,12 +1,12 @@
-import {Component, Input} from "@angular/core";
+import {Component} from "@angular/core";
 import {Modal} from "@modules/ui/modules/modal/components/custom-modal/custom-modal.container";
 import {CustomModalComponent} from "@modules/ui/modules/modal/components/custom-modal/custom-modal.component";
 
 @Component({
   selector: 'app-home-modal, homeModal',
   template: `
-    <uiModal *ngIf="open">
-      <i modal-icon class="times circle icon" (click)="close()"></i>
+    <uiModal>
+      <i modal-icon class="times circle icon" (click)="onCancel()"></i>
       <div modal-header>
         header
       </div>
@@ -19,9 +19,4 @@ import {CustomModalComponent} from "@modules/ui/modules/modal/components/custom-
 })
 @Modal()
 export class HomeModalComponent extends CustomModalComponent {
-  @Input() open: boolean = false;
-
-  close() {
-    this.open = false
-  }
 }
