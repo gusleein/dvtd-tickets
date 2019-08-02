@@ -14,12 +14,16 @@ type User struct {
 	Id          bson.ObjectId `json:"id" bson:"_id,omitempty"`
 	Email       string        `json:"email"`
 	Phone       string        `json:"phone"`
+	Name        string        `json:"name"`
+	LastName    string        `json:"lastName"`
+	CardNumber  int           `json:"cardNumber"`
 	Password    string        `json:"-"`
 	Token       string        `json:"token"`
 	Os          string        `json:"os"`
 	Version     string        `json:"version"`
 	Device      string        `json:"device"`
 	Admin       bool          `json:"admin"`
+	Seller      bool          `json:"seller"`
 	Lifesaver   bool          `json:"lifesaver"`
 	Code        string        `json:"-"`
 	CreatedAt   int64         `json:"-"`
