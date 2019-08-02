@@ -4,5 +4,5 @@ PROJECTPATH: ../../
 SOURCEPATH: "{{PROJECTPATH}}/dist/front/"
 ASSETSPATH: "{{PROJECTPATH}}/src/assets/"
 
-DEPLOY_APP:     "~/go/books/front"
-DEPLOY_ASSETS:  "~/go/books/front/assets"
+DEPLOY_APP:     "~/go/dvtd/front"
+DEPLOY_ASSETS:  "~/go/dvtd/front/assets"

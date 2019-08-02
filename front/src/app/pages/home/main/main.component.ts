@@ -20,6 +20,9 @@ import {MessagesService} from "@modules/ui/modules/messages/messages.service";
         <h2><a rel="noopener" [routerLink]="['auth']">Auth</a></h2>
       </li>
       <li>
+        <h2><a rel="noopener" [routerLink]="['users']">Users</a></h2>
+      </li>
+      <li>
         <h2><a (click)="openModal()">Modal</a></h2>
       </li>
       <li>

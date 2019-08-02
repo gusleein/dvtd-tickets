@@ -20,17 +20,40 @@ export class UsersService {
     return result;
   }
 
+  createTicket(userId: string, partyId: string) {
+    this.createQR(userId, partyId)
+      .toPromise()
+      .then((t: Ticket) => {
+        let user = this.all().find((u: UserView) => u.id == userId);
+        // ищем вечеринку по id, если такой нет, то добавляем новый тикет
+        let ticket = user.tickets.find((t: Ticket) => t.partyId == partyId);
+        if (!ticket) {
+          user.tickets.push(t)
+        }
+        this.updateStorage(this.all());
+        this.update$.next(this.all());
+      })
+  }
+
+  private updateStorage(items) {
+    localStorage.setItem(this.storageKey, JSON.stringify(items));
+  }
+
   fetch() {
     this.getAll()
       .toPromise()
-      .then((a: UserView[]) => {
-        localStorage.setItem(this.storageKey, JSON.stringify(a));
-        this.update$.next(this.all())
+      .then((items: UserView[]) => {
+        this.updateStorage(items);
+        this.update$.next(this.all());
       })
   }
 
   private getAll(): Observable<UserView[]> {
     return this.http.get<UserView[]>(environment.endpoint + '/user/list');
+  }
+
+  private createQR(userId: string, partyId: string): Observable<Ticket> {
+    return this.http.get<Ticket>(environment.endpoint + `/qr/create`);
   }
 }
 
@@ -41,7 +64,7 @@ export class UserView {
   public cardNumber: string = '';
   public tickets: Ticket[] = [];
 
-  public id?: number | string = 0;
+  public id?: string;
 
   constructor(u?: UserView) {
     if (u) {
