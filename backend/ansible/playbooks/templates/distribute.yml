@@ -12,6 +12,9 @@
   - name: Creates config directory {{DEPLOYPATH}}/config
     file: path={{DEPLOYPATH}}/config state=directory
 
+  - name: Creates uploads directory {{DEPLOYPATH}}/uploads
+    file: path={{DEPLOYPATH}}/front/uploads state=directory
+
   - name: Move config file "{{config_name}}.conf" to {{DEPLOYPATH}}/config/{{config_name}}.conf
     copy:
       src={{PROJECTPATH}}config/{{config_name}}.conf

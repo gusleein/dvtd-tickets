@@ -38,6 +38,9 @@ func main() {
 	r.POST("/user/save", web.Auth(web.UserSave))
 	r.OPTIONS("/user/save", options)
 
+	r.GET("/user/list", web.UserList)
+	r.OPTIONS("/user/list", options)
+
 	r.GET("/books/list", web.BooksList)
 	r.OPTIONS("/books/list", options)
 
@@ -46,6 +49,9 @@ func main() {
 
 	r.GET("/books/view", web.BooksView)
 	r.OPTIONS("/books/view", options)
+
+	r.GET("/qr/create", web.QRCreate)
+	r.OPTIONS("/qr/create", options)
 
 	// admin
 	r.POST("/books/save", web.Admin(web.BooksSave))

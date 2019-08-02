@@ -58,3 +58,14 @@ func UserSave(ctx *fasthttp.RequestCtx, user db.User) {
 	user.Save()
 	helpers.OutputJSON(ctx, 200, user)
 }
+
+func UserList(ctx *fasthttp.RequestCtx, _ fasthttprouter.Params) {
+	lu := int(ctx.QueryArgs().GetUintOrZero("lu"))
+	log.Debug(lu, string(ctx.Request.Header.Peek("_t")))
+	result, err := db.Users.All(lu)
+	if err != nil {
+		helpers.OutputJsonMessageResult(ctx, 500, err.Error())
+		return
+	}
+	helpers.OutputJSON(ctx, 200, result)
+}

@@ -4,7 +4,8 @@ import (
 	"errors"
 	"time"
 
-	"../helpers"
+	"github.com/AlexeySpiridonov/goapp-config"
+	"github.com/satori/go.uuid"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -23,6 +24,18 @@ type User struct {
 	Code        string        `json:"-"`
 	CreatedAt   int64         `json:"-"`
 	LastVisitAt int64         `json:"-"`
+	Tickets     []Ticket      `json:"tickets"`
+}
+
+type Ticket struct {
+	Uid     string `json:"uid"`
+	PartyId string `json:"partyId"`
+	SoldAt  int64  `json:"soldAt"`
+	QRLink  string `json:"qrLink"`
+}
+
+func (t *Ticket) GetQrCodeUri() string {
+	return config.Local.Get("uploadsDir") + "/" + t.Uid + ".png"
 }
 
 func (users) GetByToken(token string) (user User, err error) {
@@ -43,6 +56,44 @@ func (u *User) Save() (i *mgo.ChangeInfo, err error) {
 		log.Error(err, u, i)
 	}
 	return
+}
+
+func (users) All(lu int) (list []User, err error) {
+	list = make([]User, 0)
+	err = DBUsers.Find(nil).Sort("-_id").All(&list)
+	refresh("users", err)
+	return
+}
+
+func (users) CreateTicket(userId, partyId string) error {
+	user := User{}
+	// если у пользователя сгенерирован qr код на выбранную вечеринку, то отдаем ошибку
+	err := DBUsers.Find(bson.M{"_id": userId}).One(&user)
+	// находим билет по id вечеринки
+	for _, t := range user.Tickets {
+		if t.PartyId == partyId {
+			if err != nil {
+				err := errors.New("Ticket already created")
+				return err
+			}
+		}
+	}
+
+	// иначе создаем создаем qr код
+	ticket := Ticket{}
+	uid, _ := uuid.NewV4()
+	ticket.PartyId = partyId
+	ticket.Uid = uid.String()
+	ticket.SoldAt = time.Now().Unix()
+	ticket.QRLink = ticket.GetQrCodeUri()
+
+	user.Tickets = append(user.Tickets, ticket)
+	// todo: добавить транзакцию если продажа билета происходит
+
+	err = DBUsers.UpdateId(user.Id, bson.M{"$set": bson.M{"tickets": user.Tickets}})
+	refresh("user", err)
+
+	return err
 }
 
 func (users) Confirm(phone, code string) (user User, err error) {
@@ -91,14 +142,7 @@ func (users) Auth(Phone, Password, Os, Version, Device string) (code string, err
 	log.Debug(user)
 	refresh("user", err)
 
-	if err == nil {
-		// найден пользователь, проверяем пароль
-		if user.Password != Password {
-			err = errors.New("Неверный логин или пароль")
-			log.Error(err)
-			return
-		}
-	} else {
+	if err != nil {
 		// иначе создаем нового
 		user.Id = bson.NewObjectId()
 		user.Phone = Phone
@@ -106,17 +150,25 @@ func (users) Auth(Phone, Password, Os, Version, Device string) (code string, err
 		user.CreatedAt = time.Now().Unix()
 		err = DBUsers.Insert(user)
 	}
+	err = errors.New(user.Password + "Неверный логин или пароль" + Password)
+	return
 
-	code = helpers.StringWithIntset(5)
-
-	code2 := code
+	// найден пользователь, проверяем пароль
+	// if user.Password != Password {
+	// 	log.Error(err)
+	// 	return
+	// }
+	//
+	// code = helpers.StringWithIntset(5)
+	//
+	// code2 := code
 	// if config.GetEnv() == "dev" {
 	// 	code2 = "00000"
 	// }
-
-	err = DBUsers.UpdateId(user.Id, bson.M{"$set": bson.M{"code": code2, "os": Os, "version": Version, "device": Device}})
-	if err != nil {
-		log.Error(err)
-	}
-	return
+	//
+	// err = DBUsers.UpdateId(user.Id, bson.M{"$set": bson.M{"code": code2, "os": Os, "version": Version, "device": Device}})
+	// if err != nil {
+	// 	log.Error(err)
+	// }
+	// return
 }
