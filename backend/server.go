@@ -29,36 +29,28 @@ func main() {
 	// run http api server
 	r := fasthttprouter.New()
 
+	r.OPTIONS("/*path", options)
+
 	r.POST("/user/auth", web.UserAuth)
-	r.OPTIONS("/user/auth", options)
 
 	r.POST("/user/confirm", web.UserConfirm)
-	r.OPTIONS("/user/confirm", options)
 
 	r.POST("/user/save", web.Auth(web.UserSave))
-	r.OPTIONS("/user/save", options)
 
 	r.GET("/user/list", web.UserList)
-	r.OPTIONS("/user/list", options)
 
 	r.GET("/books/list", web.BooksList)
-	r.OPTIONS("/books/list", options)
 
 	r.GET("/books/all", web.Auth(web.BooksAll))
-	r.OPTIONS("/books/all", options)
 
 	r.GET("/books/view", web.BooksView)
-	r.OPTIONS("/books/view", options)
 
-	r.GET("/qr/create", web.QRCreate)
-	r.OPTIONS("/qr/create", options)
+	r.GET("/qr/create/:userId/:partyId", web.QRCreate)
 
 	// admin
 	r.POST("/books/save", web.Admin(web.BooksSave))
-	r.OPTIONS("/books/save", options)
 
 	r.POST("/books/delete", web.Admin(web.BooksDelete))
-	r.OPTIONS("/books/delete", options)
 
 	log.Info("Run HTTP server on " + config.Local.Get("serverHost"))
 	server := &fasthttp.Server{

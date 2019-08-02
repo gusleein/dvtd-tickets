@@ -69,22 +69,25 @@ func (users) All(lu int) (list []User, err error) {
 	return
 }
 
-func (users) CreateTicket(userId, partyId string) error {
+func (users) CreateTicket(userId, partyId string) (ticket Ticket, err error) {
 	user := User{}
 	// если у пользователя сгенерирован qr код на выбранную вечеринку, то отдаем ошибку
-	err := DBUsers.Find(bson.M{"_id": userId}).One(&user)
+	err = DBUsers.Find(bson.M{"_id": bson.ObjectIdHex(userId)}).One(&user)
+	defer refresh("users", err)
+	if err != nil {
+		return
+	}
 	// находим билет по id вечеринки
 	for _, t := range user.Tickets {
 		if t.PartyId == partyId {
 			if err != nil {
-				err := errors.New("Ticket already created")
-				return err
+				err = errors.New("Ticket already created")
+				return
 			}
 		}
 	}
 
 	// иначе создаем создаем qr код
-	ticket := Ticket{}
 	uid, _ := uuid.NewV4()
 	ticket.PartyId = partyId
 	ticket.Uid = uid.String()
@@ -95,9 +98,7 @@ func (users) CreateTicket(userId, partyId string) error {
 	// todo: добавить транзакцию если продажа билета происходит
 
 	err = DBUsers.UpdateId(user.Id, bson.M{"$set": bson.M{"tickets": user.Tickets}})
-	refresh("user", err)
-
-	return err
+	return
 }
 
 func (users) Confirm(phone, code string) (user User, err error) {
