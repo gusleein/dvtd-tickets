@@ -16,7 +16,7 @@ type User struct {
 	Phone       string        `json:"phone"`
 	Name        string        `json:"name"`
 	LastName    string        `json:"lastName"`
-	CardNumber  int           `json:"cardNumber"`
+	CardNumber  string        `json:"cardNumber"`
 	Password    string        `json:"-"`
 	Token       string        `json:"token"`
 	Os          string        `json:"os"`
