@@ -7,11 +7,13 @@
 ---------------*/
 
 @fontName: 'icons';
-@src: url("@{fontPath}/@{fontName}.eot?#iefix") format('embedded-opentype'),
-url("@{fontPath}/@{fontName}.woff2") format('woff2'),
-url("@{fontPath}/@{fontName}.woff") format('woff'),
-url("@{fontPath}/@{fontName}.ttf") format('truetype'),
-url("@{fontPath}/@{fontName}.svg#icons") format('svg');
+@src:
+  url("@{fontPath}/@{fontName}.eot?#iefix") format('embedded-opentype'),
+  url("@{fontPath}/@{fontName}.woff2") format('woff2'),
+  url("@{fontPath}/@{fontName}.woff") format('woff'),
+  url("@{fontPath}/@{fontName}.ttf") format('truetype'),
+  url("@{fontPath}/@{fontName}.svg#icons") format('svg')
+;
 @fallbackSRC: url("@{fontPath}/@{fontName}.eot");
 
 /*--------------
@@ -21,21 +23,25 @@ url("@{fontPath}/@{fontName}.svg#icons") format('svg');
 /* Outline Icons */
 @importOutlineIcons: true;
 @outlineFontName: 'outline-icons';
-@outlineSrc: url("@{fontPath}/@{outlineFontName}.eot?#iefix") format('embedded-opentype'),
-url("@{fontPath}/@{outlineFontName}.woff2") format('woff2'),
-url("@{fontPath}/@{outlineFontName}.woff") format('woff'),
-url("@{fontPath}/@{outlineFontName}.ttf") format('truetype'),
-url("@{fontPath}/@{outlineFontName}.svg#icons") format('svg');
+@outlineSrc:
+  url("@{fontPath}/@{outlineFontName}.eot?#iefix") format('embedded-opentype'),
+  url("@{fontPath}/@{outlineFontName}.woff2") format('woff2'),
+  url("@{fontPath}/@{outlineFontName}.woff") format('woff'),
+  url("@{fontPath}/@{outlineFontName}.ttf") format('truetype'),
+  url("@{fontPath}/@{outlineFontName}.svg#icons") format('svg')
+;
 @outlineFallbackSRC: url("@{fontPath}/@{outlineFontName}.eot");
 
 /* Brand Icons */
 @importBrandIcons: true;
 @brandFontName: 'brand-icons';
-@brandSrc: url("@{fontPath}/@{brandFontName}.eot?#iefix") format('embedded-opentype'),
-url("@{fontPath}/@{brandFontName}.woff2") format('woff2'),
-url("@{fontPath}/@{brandFontName}.woff") format('woff'),
-url("@{fontPath}/@{brandFontName}.ttf") format('truetype'),
-url("@{fontPath}/@{brandFontName}.svg#icons") format('svg');
+@brandSrc:
+  url("@{fontPath}/@{brandFontName}.eot?#iefix") format('embedded-opentype'),
+  url("@{fontPath}/@{brandFontName}.woff2") format('woff2'),
+  url("@{fontPath}/@{brandFontName}.woff") format('woff'),
+  url("@{fontPath}/@{brandFontName}.ttf") format('truetype'),
+  url("@{fontPath}/@{brandFontName}.svg#icons") format('svg')
+;
 @brandFallbackSRC: url("@{fontPath}/@{brandFontName}.eot");
 
 /*--------------
@@ -65,14 +71,18 @@ url("@{fontPath}/@{brandFontName}.svg#icons") format('svg');
 
 @cornerIconSize: 0.45em;
 @cornerIconStroke: 1px;
-@cornerIconShadow: -@cornerIconStroke -@cornerIconStroke 0 @white,
-  @cornerIconStroke -@cornerIconStroke 0 @white,
--@cornerIconStroke @cornerIconStroke 0 @white,
-@cornerIconStroke @cornerIconStroke 0 @white;
-@cornerIconInvertedShadow: -@cornerIconStroke -@cornerIconStroke 0 @black,
-  @cornerIconStroke -@cornerIconStroke 0 @black,
--@cornerIconStroke @cornerIconStroke 0 @black,
-@cornerIconStroke @cornerIconStroke 0 @black;
+@cornerIconShadow:
+  -@cornerIconStroke -@cornerIconStroke 0 @white,
+   @cornerIconStroke -@cornerIconStroke 0 @white,
+  -@cornerIconStroke  @cornerIconStroke 0 @white,
+   @cornerIconStroke  @cornerIconStroke 0 @white
+;
+@cornerIconInvertedShadow:
+  -@cornerIconStroke -@cornerIconStroke 0 @black,
+   @cornerIconStroke -@cornerIconStroke 0 @black,
+  -@cornerIconStroke  @cornerIconStroke 0 @black,
+   @cornerIconStroke  @cornerIconStroke 0 @black
+;
 
 @mini: 0.4em;
 @tiny: 0.5em;
