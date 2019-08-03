@@ -4,7 +4,7 @@ import {UsersService, UserView} from "@modules/users/services/users.service";
 @Component({
   selector: 'app-users-list',
   template: `
-    <a href="/">home</a>
+    <a [routerLink]="'/'">home</a>
     
     <div class="ui basic segment">
       <h2 class="page-header">Users</h2>
@@ -35,6 +35,7 @@ import {UsersService, UserView} from "@modules/users/services/users.service";
               <span>{{t.eventId}}</span><br>
               <a target="_blank" [href]="t.qrLink">{{t.qrLink}}</a><br>
               <span>{{t.soldAt}}</span><br>
+              <span>{{t.price}}</span><br>
             </div>
           </td>
           <td>
