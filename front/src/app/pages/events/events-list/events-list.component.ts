@@ -45,6 +45,7 @@ import {EventsCreateModalComponent} from "../events-create-modal/events-create-m
       </tbody>
     </table>
     <uiModalPlaceholder></uiModalPlaceholder>
+    <uiMessages></uiMessages>
   `,
   styles: []
 })
@@ -64,7 +65,9 @@ export class EventsListComponent implements OnInit {
   }
 
   create() {
-    this.modal.create(EventsCreateModalComponent, {})
+    this.modal.create(EventsCreateModalComponent, {
+      onClose: () => this.events.fetch()
+    })
   }
 
 }

@@ -37,8 +37,8 @@ export class EventsService {
     return this.http.get<EventView[]>(environment.endpoint + '/events/list');
   }
 
-  private create(p: EventView): Observable<any> {
-    return this.http.post(environment.endpoint + '/events/save', p);
+  public save(e: EventView): Promise<any> {
+    return this.http.post(environment.endpoint + '/events/save', e).toPromise();
   }
 }
 

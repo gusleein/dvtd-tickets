@@ -7,6 +7,7 @@ import {EventsService} from "@modules/events/services/events.service";
 import {HttpClientModule} from "@angular/common/http";
 import {CustomModalModule} from "@modules/ui/modules/modal/components/custom-modal/custom-modal.module";
 import {EventsCreateModalModule} from "./events-create-modal/events-create-modal.module";
+import {MessagesModule} from "@modules/ui/modules/messages/messages.module";
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import {EventsCreateModalModule} from "./events-create-modal/events-create-modal
     EventsCreateModalModule,
     CustomModalModule,
     EventsRoutingModule,
+    MessagesModule,
   ],
   declarations: [
     EventsListComponent,
