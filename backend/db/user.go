@@ -32,10 +32,11 @@ type User struct {
 }
 
 type Ticket struct {
-	Uid     string `json:"uid"`
-	PartyId string `json:"partyId"`
-	SoldAt  int64  `json:"soldAt"`
-	QRLink  string `json:"qrLink"`
+	Uid     string  `json:"uid"`
+	EventId string  `json:"eventId"`
+	SoldAt  int64   `json:"soldAt"`
+	QRLink  string  `json:"qrLink"`
+	Price   float64 `json:"price"`
 }
 
 func (t *Ticket) GetQrCodeUri() string {
@@ -69,7 +70,7 @@ func (users) All(lu int) (list []User, err error) {
 	return
 }
 
-func (users) CreateTicket(userId, partyId string) (ticket Ticket, err error) {
+func (users) CreateTicket(userId, eventId string) (ticket Ticket, err error) {
 	user := User{}
 	// если у пользователя сгенерирован qr код на выбранную вечеринку, то отдаем ошибку
 	err = DBUsers.Find(bson.M{"_id": bson.ObjectIdHex(userId)}).One(&user)
@@ -79,7 +80,7 @@ func (users) CreateTicket(userId, partyId string) (ticket Ticket, err error) {
 	}
 	// находим билет по id вечеринки
 	for _, t := range user.Tickets {
-		if t.PartyId == partyId {
+		if t.EventId == eventId {
 			if err != nil {
 				err = errors.New("Ticket already created")
 				return
@@ -89,7 +90,7 @@ func (users) CreateTicket(userId, partyId string) (ticket Ticket, err error) {
 
 	// иначе создаем создаем qr код
 	uid, _ := uuid.NewV4()
-	ticket.PartyId = partyId
+	ticket.EventId = eventId
 	ticket.Uid = uid.String()
 	ticket.SoldAt = time.Now().Unix()
 	ticket.QRLink = config.Local.Get("uploads") + "/" + ticket.Uid + ".png"

@@ -52,6 +52,9 @@ func main() {
 
 	r.POST("/books/delete", web.Admin(web.BooksDelete))
 
+	r.GET("/events/list", web.EventList)
+	r.POST("/events/save", web.EventSave)
+
 	log.Info("Run HTTP server on " + config.Local.Get("serverHost"))
 	server := &fasthttp.Server{
 		Handler:            r.Handler,

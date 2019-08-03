@@ -10,19 +10,20 @@ import (
 )
 
 type (
-	users struct{}
-	books struct{}
+	users  struct{}
+	books  struct{}
+	events struct{}
 )
 
 var (
 	log = logging.MustGetLogger("db")
 	Db  *mgo.Session
 
-	DBUsers *mgo.Collection
-	DBBooks *mgo.Collection
+	DBUsers, DBBooks, DBEvents *mgo.Collection
 
-	Users users
-	Books books
+	Users  users
+	Books  books
+	Events events
 )
 
 func init() {
@@ -41,6 +42,7 @@ func init() {
 	// set collections
 	DBUsers = Db.C("users")
 	DBBooks = Db.C("books")
+	DBEvents = Db.C("events")
 
 }
 
