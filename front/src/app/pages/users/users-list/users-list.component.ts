@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {UsersService, UserView} from "@modules/users/services/users.service";
+import {CustomModalService} from "@modules/ui/modules/modal/shared/services/custom-modal.service";
+import {EventsSingleModalComponent} from "@modules/events/events-single-modal/events-single-modal.component";
 
 @Component({
   selector: 'app-users-list',
   template: `
-    <a [routerLink]="'/'">home</a>
-    
     <div class="ui basic segment">
       <h2 class="page-header">Users</h2>
     </div>
@@ -32,7 +32,7 @@ import {UsersService, UserView} from "@modules/users/services/users.service";
           <td>
             <div *ngFor="let t of u.tickets">
               <span>{{t.uid}}</span><br>
-              <span>{{t.eventId}}</span><br>
+              <a (click)="viewEvent(t.eventId)">{{t.eventId}}</a><br>
               <a target="_blank" [href]="t.qrLink">{{t.qrLink}}</a><br>
               <span>{{t.soldAt}}</span><br>
               <span>{{t.price}}</span><br>
@@ -54,7 +54,8 @@ import {UsersService, UserView} from "@modules/users/services/users.service";
 export class UsersListComponent implements OnInit {
   list: UserView[] = [];
 
-  constructor(private users: UsersService) {
+  constructor(private users: UsersService,
+              private modal: CustomModalService) {
   }
 
   ngOnInit() {
@@ -67,5 +68,9 @@ export class UsersListComponent implements OnInit {
 
   createTicket(u: UserView, eventId: string) {
     this.users.createTicket(u.id, eventId)
+  }
+
+  viewEvent(id: string) {
+    this.modal.create(EventsSingleModalComponent, {id: id})
   }
 }

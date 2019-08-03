@@ -7,7 +7,6 @@ import {EventsSingleModalComponent} from "@modules/events/events-single-modal/ev
 @Component({
   selector: 'app-events-list',
   template: `
-    <a [routerLink]="'/'">home</a>
     <div class="ui basic segment">
       <h2 class="page-header">Events</h2>
       <div class="action-buttons">
