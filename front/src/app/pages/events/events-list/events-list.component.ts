@@ -19,25 +19,24 @@ import * as _ from "underscore";
       </div>
     </div>
 
-    <table class="ui inverted unstackable striped table">
+    <table class="ui inverted selectable unstackable striped table">
       <thead>
         <tr>
           <th>#</th>
-          <th>
-            <i class="icon sort up link" (click)="sortBy('date')"></i>
+          <th (click)="sortBy('date')">
+            <i class="icon sort link"
+               [ngClass]="sortDirectionIcon('date')"></i>
             date
           </th>
-          <th>
-            <i class="icon sort link" (click)="sortBy('title')"></i>
+          <th (click)="sortBy('title')">
+            <i class="icon sort link"
+               [ngClass]="sortDirectionIcon('title')"></i>
             title
           </th>
-          <th>
-            <i class="icon sort link" (click)="sortBy('price')"></i>
+          <th (click)="sortBy('price')">
+            <i class="icon sort link"
+               [ngClass]="sortDirectionIcon('price')"></i>
             price
-          </th>
-          <th>
-            <i class="icon sort link" (click)="sortBy('modifyAt')"></i>
-            lastModifyAt
           </th>
           <th class="center aligned">actions</th>
         </tr>
@@ -46,10 +45,9 @@ import * as _ from "underscore";
         <tr *ngFor="let e of list; let num = index">
           <td>{{num + 1}}</td>
           <td>{{e.dateToString('date')}}</td>
-          <td>{{e.title}}</td>
+          <td><a [routerLink]="" (click)="view(e.id)">{{e.title}}</a></td>
           <td>{{e.price}}</td>
-          <td>{{e.dateToString('modifyAt')}}</td>
-          <td>
+          <td class="center aligned">
             <i class="large pencil icon link gray" (click)="edit(e.id)" title="Редактировать"></i>
             <i class="large eye icon link gray" (click)="view(e.id)" title="Открыть"></i>
             &nbsp;&nbsp;&nbsp;&nbsp;
@@ -65,7 +63,7 @@ import * as _ from "underscore";
 export class EventsListComponent implements OnInit {
 
   list: EventView[] = [];
-  sortingColumn: string = 'date';
+  columnToSort: string = 'date';
   sortReverse: boolean = true;
 
   constructor(private events: EventsService,
@@ -74,7 +72,7 @@ export class EventsListComponent implements OnInit {
 
   ngOnInit() {
     this.events.update$.subscribe((list: EventView[]) => {
-      list = _.sortBy(list, this.sortingColumn);
+      list = _.sortBy(list, this.columnToSort);
       if (this.sortReverse) list.reverse();
       this.list = list;
     });
@@ -101,7 +99,7 @@ export class EventsListComponent implements OnInit {
   }
 
   sort() {
-    this.list = _.sortBy(this.list, this.sortingColumn);
+    this.list = _.sortBy(this.list, this.columnToSort);
     if (this.sortReverse) this.list.reverse();
   }
 
@@ -110,13 +108,27 @@ export class EventsListComponent implements OnInit {
     this.toggleReverse();
 
     // если выбран другой столбик, то уст. направление сортировки по-умолчанию
-    if (by !== this.sortingColumn) this.sortReverse = false;
+    if (by !== this.columnToSort) this.sortReverse = false;
 
-    this.sortingColumn = by;
+    this.columnToSort = by;
     this.sort();
   }
 
   toggleReverse() {
     this.sortReverse = !this.sortReverse;
+  }
+
+  sortDirectionIcon(byColumn: string): string {
+    if (this.sortDirection(byColumn) > 0) return 'sort up';
+    if (this.sortDirection(byColumn) < 0) return 'sort down';
+    return 'sort';
+  }
+
+  sortDirection(byColumn: string): number {
+    if (byColumn == this.columnToSort) {
+      if (this.sortReverse) return -1;
+      return 1;
+    }
+    return 0;
   }
 }
