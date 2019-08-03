@@ -20,8 +20,8 @@ export class UsersService {
     return result;
   }
 
-  createTicket(userId: string, partyId: string) {
-    this.createQR(userId, partyId)
+  createTicket(userId: string, eventId: string) {
+    this.createQR(userId, eventId)
       .toPromise()
       .then(() => {
         this.fetch()
@@ -45,8 +45,8 @@ export class UsersService {
     return this.http.get<UserView[]>(environment.endpoint + '/user/list');
   }
 
-  private createQR(userId: string, partyId: string): Observable<Ticket> {
-    return this.http.get<Ticket>(environment.endpoint + `/qr/create?user=` + userId + `&party=` + partyId);
+  private createQR(userId: string, eventId: string): Observable<Ticket> {
+    return this.http.get<Ticket>(environment.endpoint + `/qr/create?user=` + userId + `&event=` + eventId);
   }
 }
 
@@ -73,7 +73,7 @@ export class UserView {
 
 export interface Ticket {
   uid: string;
-  partyId: string;
+  eventId: string;
   qrLink: string;
   soldAt: number;
 }

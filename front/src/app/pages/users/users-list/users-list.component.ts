@@ -32,7 +32,7 @@ import {UsersService, UserView} from "@modules/users/services/users.service";
           <td>
             <div *ngFor="let t of u.tickets">
               <span>{{t.uid}}</span><br>
-              <span>{{t.partyId}}</span><br>
+              <span>{{t.eventId}}</span><br>
               <a target="_blank" [href]="t.qrLink">{{t.qrLink}}</a><br>
               <span>{{t.soldAt}}</span><br>
             </div>
@@ -62,7 +62,7 @@ export class UsersListComponent implements OnInit {
     this.users.fetch();
   }
 
-  createTicket(u: UserView, partyId: string) {
-    this.users.createTicket(u.id, partyId)
+  createTicket(u: UserView, eventId: string) {
+    this.users.createTicket(u.id, eventId)
   }
 }
