@@ -11,24 +11,31 @@ import (
 )
 
 type User struct {
-	Id          bson.ObjectId `json:"id" bson:"_id,omitempty"`
-	Email       string        `json:"email"`
-	Phone       string        `json:"phone"`
-	Name        string        `json:"name"`
-	LastName    string        `json:"lastName"`
-	CardNumber  string        `json:"cardNumber"`
-	Password    string        `json:"-"`
-	Token       string        `json:"token"`
-	Os          string        `json:"os"`
-	Version     string        `json:"version"`
-	Device      string        `json:"device"`
-	Admin       bool          `json:"admin"`
-	Seller      bool          `json:"seller"`
-	Lifesaver   bool          `json:"lifesaver"`
-	Code        string        `json:"-"`
-	CreatedAt   int64         `json:"-"`
-	LastVisitAt int64         `json:"-"`
-	Tickets     []Ticket      `json:"tickets"`
+	Id bson.ObjectId `json:"id" bson:"_id,omitempty"`
+
+	Email string `json:"email"`
+
+	Phone      string   `json:"phone"`
+	Name       string   `json:"name"`
+	LastName   string   `json:"lastName"`
+	CardNumber string   `json:"cardNumber"`
+	Tickets    []Ticket `json:"tickets"`
+
+	Password string `json:"-"`
+	Token    string `json:"token"`
+	Os       string `json:"os"`
+	Version  string `json:"version"`
+	Device   string `json:"device"`
+
+	Admin   bool `json:"admin"`
+	Seller  bool `json:"seller"`
+	Checker bool `json:"checker"`
+	Artist  bool `json:"artist"`
+
+	Code        string `json:"-"`
+	CreatedAt   int64  `json:"-"`
+	ModifyAt    int64  `json:"-"`
+	LastVisitAt int64  `json:"-"`
 }
 
 type Ticket struct {
