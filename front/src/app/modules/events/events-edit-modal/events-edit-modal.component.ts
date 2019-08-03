@@ -11,7 +11,7 @@ import {MessagesService} from "../../ui/modules/messages/messages.service";
     <uiModal>
       <i modal-icon class="times circle icon" (click)="onCancel()"></i>
       <div modal-header>
-        Создание Event'a
+        Редактирование Event'a
       </div>
       <div modal-content>
         <form class="ui error form" [formGroup]="form" (ngSubmit)="save()">
@@ -94,10 +94,12 @@ import {MessagesService} from "../../ui/modules/messages/messages.service";
   styles: []
 })
 @Modal()
-export class EventsCreateModalComponent extends CustomModalComponent implements OnInit {
+export class EventsEditModalComponent extends CustomModalComponent implements OnInit {
 
   @Input() onClose: Function;
+  @Input() id: string;
 
+  model: EventView;
   form: FormGroup;
 
   isSubmitting: boolean = false;
@@ -108,16 +110,16 @@ export class EventsCreateModalComponent extends CustomModalComponent implements 
   }
 
   ngOnInit() {
-    let date: string = (new Date()).toISOString().slice(0, 10);
+    this.model = this.service.one(this.id);
 
     this.form = new FormGroup({
-      'title': new FormControl('', [
+      'title': new FormControl(this.model.title, [
         Validators.required
       ]),
-      'price': new FormControl('', [
+      'price': new FormControl(this.model.price, [
         Validators.required
       ]),
-      'date': new FormControl(date, [
+      'date': new FormControl(this.model.dateToString(), [
         Validators.required
       ]),
     });
@@ -140,9 +142,12 @@ export class EventsCreateModalComponent extends CustomModalComponent implements 
     if (this.form.invalid) return;
     this.isSubmitting = true;
 
-    let event = new EventView(this.form.value);
-    event.date = Math.trunc(((new Date(this.date.value)).getTime() / 1000));
-    event.price = parseFloat(this.price.value);
+    let event = new EventView(<EventView>{
+      id: this.id,
+      title: this.title.value,
+      price: parseFloat(this.price.value),
+    });
+    event.setDateFromString(this.date.value);
 
     this.service.save(event)
       .then(() => {

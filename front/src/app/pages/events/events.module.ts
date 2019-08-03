@@ -9,17 +9,20 @@ import {CustomModalModule} from "@modules/ui/modules/modal/components/custom-mod
 import {EventsCreateModalModule} from "@modules/events/events-create-modal/events-create-modal.module";
 import {MessagesModule} from "@modules/ui/modules/messages/messages.module";
 import {EventsSingleModalModule} from "@modules/events/events-single-modal/events-single-modal.module";
+import {EventsEditModalModule} from "@modules/events/events-edit-modal/events-edit-modal.module";
 
 @NgModule({
   imports: [
     CommonModule,
     HttpClientModule,
-    EventsCreateModalModule,
-    EventsSingleModalModule,
-    EventsRoutingModule,
-
     CustomModalModule,
     MessagesModule,
+
+    EventsRoutingModule,
+
+    EventsCreateModalModule,
+    EventsSingleModalModule,
+    EventsEditModalModule,
   ],
   declarations: [
     EventsListComponent,

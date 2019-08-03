@@ -15,6 +15,9 @@ import {Component} from "@angular/core";
           <li>
             <h2><a rel="noopener" [routerLink]="['events']">Events</a></h2>
           </li>
+          <li>
+            <h2><a rel="noopener" [routerLink]="['tickets']">Tickets</a></h2>
+          </li>
         </ul>
       </div>
       <div class="fourteen wide column">

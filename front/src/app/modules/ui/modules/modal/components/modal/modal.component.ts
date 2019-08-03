@@ -6,7 +6,7 @@ import {Modal} from "../custom-modal/custom-modal.container";
   selector: 'ui-modal, uiModal',
   template: `
     <div class="ui dimmer modals transition visible active ui-modal">
-      <div class="ui modal">
+      <div class="ui modal" [ngClass]="size">
         <ng-content select="[modal-icon]" (click)="onCancel()"></ng-content>
         <div class="header">
           <ng-content select="[modal-header]"></ng-content>
@@ -33,4 +33,5 @@ import {Modal} from "../custom-modal/custom-modal.container";
 @Modal()
 export class ModalComponent extends CustomModalComponent {
   @Input() isLoading = false;
+  @Input() size: string = '';
 }

@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {Observable, ReplaySubject, Subject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "@env/environment.dev"
+import * as helpers from "@core/shared/helpers"
 
 @Injectable()
 export class EventsService {
@@ -24,6 +25,14 @@ export class EventsService {
   one(id: string): EventView {
     let list = this.all();
     return list.find((e: EventView) => e.id == id)
+  }
+
+  // предстоящее событие
+  upcoming(): EventView {
+    let list = this.all();
+    // сегодня +2 дня
+    let now = Date.now() + 2 * 24 * 3600 * 1000;
+    return list.find((e: EventView) => e.date * 1000 < now)
   }
 
   fetch() {
@@ -67,5 +76,23 @@ export class EventView {
       this.modifyAt = e.modifyAt;
       this.id = e.id;
     }
+  }
+
+  dateToString(key?: string): string {
+    if (key) {
+      if (!this[key]) this[key] = helpers.parseTsFromInt(Date.now());
+      return helpers.tsToStringDate(this[key]);
+    }
+    // если значение не устанавлено, то уст. текущую дату
+    if (!this.date) this.date = helpers.parseTsFromInt(Date.now());
+    return helpers.tsToStringDate(this.date);
+  }
+
+  setDateFromString(date: string) {
+    this.date = helpers.parseTsFromString(date)
+  }
+
+  parseDateFromString(date: string): number {
+    return helpers.parseTsFromString(date)
   }
 }

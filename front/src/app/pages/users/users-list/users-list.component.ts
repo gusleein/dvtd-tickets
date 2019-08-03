@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {UsersService, UserView} from "@modules/users/services/users.service";
 import {CustomModalService} from "@modules/ui/modules/modal/shared/services/custom-modal.service";
 import {EventsSingleModalComponent} from "@modules/events/events-single-modal/events-single-modal.component";
+import {UsersSingleModalComponent} from "@modules/users/users-single-modal/users-single-modal.component";
 
 @Component({
   selector: 'app-users-list',
@@ -41,7 +42,7 @@ import {EventsSingleModalComponent} from "@modules/events/events-single-modal/ev
           <td>
             <i class="large pencil icon link gray" [routerLink]="['single/' + u.id]" title="Редактировать"></i>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <i class="large ticket icon link green" (click)="createTicket(u, '5d44e4ad3f096b506d5016dc')"></i>
+            <i class="large ticket icon link green" (click)="createTicket(u, '5d44e7243f096b506d5016de')"></i>
           </td>
         </tr>
       </tbody>
@@ -72,5 +73,9 @@ export class UsersListComponent implements OnInit {
 
   viewEvent(id: string) {
     this.modal.create(EventsSingleModalComponent, {id: id})
+  }
+
+  viewUser(id: string) {
+    this.modal.create(UsersSingleModalComponent, {id: id})
   }
 }

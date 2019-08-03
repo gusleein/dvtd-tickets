@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {Observable, ReplaySubject, Subject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "@env/environment.dev"
+import * as helpers from "@core/shared/helpers";
 
 @Injectable()
 export class UsersService {
@@ -16,6 +17,27 @@ export class UsersService {
     let list = JSON.parse(localStorage.getItem(this.storageKey));
     for (let i of list) {
       result.push(new UserView(i))
+    }
+    return result;
+  }
+
+  one(id: string): UserView {
+    let list = this.all();
+    return list.find((u: UserView) => u.id == id)
+  }
+
+  // находим пользователей с купленными билетами
+  filterUsersByEvent(eventId: string): UserView[] {
+    let result: UserView[] = [];
+    let list = this.all();
+    for (let u of list) {
+      if (u.tickets.length > 0) {
+        for (let t of u.tickets) {
+          if (t.eventId == eventId) {
+            result.push(u)
+          }
+        }
+      }
     }
     return result;
   }
@@ -68,6 +90,20 @@ export class UserView {
       this.tickets = u.tickets;
       this.id = u.id;
     }
+  }
+
+  getTicketByEvent(eventId: string): Ticket {
+    return this.tickets.find((t: Ticket) => t.eventId == eventId)
+  }
+
+  getTicketDate(eventId: string): string {
+    let t = this.getTicketByEvent(eventId);
+    return helpers.tsToStringDate(t.soldAt * 1000)
+  }
+
+  getTicketPrice(eventId: string): number {
+    let t = this.getTicketByEvent(eventId);
+    return t.price;
   }
 }
 
