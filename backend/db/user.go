@@ -78,6 +78,12 @@ func (users) CreateTicket(userId, eventId string) (ticket Ticket, err error) {
 	if err != nil {
 		return
 	}
+	event := Event{}
+	err = DBEvents.Find(bson.M{"_id": bson.ObjectIdHex(eventId)}).One(&event)
+	defer refresh("events", err)
+	if err != nil {
+		return
+	}
 	// находим билет по id вечеринки
 	for _, t := range user.Tickets {
 		if t.EventId == eventId {
@@ -94,6 +100,7 @@ func (users) CreateTicket(userId, eventId string) (ticket Ticket, err error) {
 	ticket.Uid = uid.String()
 	ticket.SoldAt = time.Now().Unix()
 	ticket.QRLink = config.Local.Get("uploads") + "/" + ticket.Uid + ".png"
+	ticket.Price = event.Price
 
 	user.Tickets = append(user.Tickets, ticket)
 	// todo: добавить транзакцию если продажа билета происходит
