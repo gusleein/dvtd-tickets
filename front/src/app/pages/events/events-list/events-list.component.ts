@@ -1,13 +1,20 @@
 import {Component, OnInit} from '@angular/core';
 import {EventsService, EventView} from "@modules/events/services/events.service";
+import {CustomModalService} from "@modules/ui/modules/modal/shared/services/custom-modal.service";
+import {EventsCreateModalComponent} from "../events-create-modal/events-create-modal.component";
 
 @Component({
   selector: 'app-events-list',
   template: `
     <a href="/">home</a>
-
     <div class="ui basic segment">
       <h2 class="page-header">Events</h2>
+      <div class="action-buttons">
+        <button class="ui medium right floated blue button" (click)="create()">
+          <i class="plus icon"></i>
+          Добавить
+        </button>
+      </div>
     </div>
 
     <table class="ui inverted unstackable striped table">
@@ -37,6 +44,7 @@ import {EventsService, EventView} from "@modules/events/services/events.service"
         </tr>
       </tbody>
     </table>
+    <uiModalPlaceholder></uiModalPlaceholder>
   `,
   styles: []
 })
@@ -44,7 +52,8 @@ export class EventsListComponent implements OnInit {
 
   list: EventView[] = [];
 
-  constructor(private events: EventsService) {
+  constructor(private events: EventsService,
+              private modal: CustomModalService) {
   }
 
   ngOnInit() {
@@ -52,6 +61,10 @@ export class EventsListComponent implements OnInit {
       this.list = list
     });
     this.events.fetch();
+  }
+
+  create() {
+    this.modal.create(EventsCreateModalComponent, {})
   }
 
 }
