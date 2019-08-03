@@ -4,6 +4,7 @@ import {CustomModalComponent} from "@modules/ui/modules/modal/components/custom-
 import {UsersService, UserView} from "@modules/users/services/users.service";
 import {EventsService, EventView} from "@modules/events/services/events.service";
 import * as _ from "underscore"
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-users-create-ticket-modal',
@@ -14,73 +15,86 @@ import * as _ from "underscore"
         <h4>Оформление билета</h4>
       </div>
       <div modal-content>
-        <div class="ui basic segment">
-          <h3 class="header">{{event.dateToString()}} | {{event.title}}</h3>
-          <div class="ui grid">
-            <div class="five wide column">
-            </div>
-            <div class="six wide column">
-              <h4 class="page-header">Поиск по участникам</h4>
-              <div class="ui form">
-                <div class="field">
-                  <div class="ui huge transparent icon input">
-                    <input [(ngModel)]="searchQuery"
-                           type="text"
-                           placeholder="Search..."
-                           (keyup)="onChangeSearch()"
-                    >
-                    <i class="search icon"></i>
-                  </div>
+        <div class="ui grid">
+          <div class="nine wide column">
+            <h3 class="header">{{event.dateToString()}} &nbsp;&nbsp;/&nbsp;&nbsp; {{event.title}}</h3>
+          </div>
+          <div class="six wide column">
+            <h4 class="page-header">Поиск по участникам</h4>
+            <div class="ui form">
+              <div class="field">
+                <div class="ui huge icon input">
+                  <input [(ngModel)]="query"
+                         type="text"
+                         placeholder="Search..."
+                         (keyup)="onChangeSearch()"
+                  >
+                  <i class="search icon"></i>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <table class="ui inverted selectable unstackable striped table">
+        <table class="ui inverted selectable unstackable striped fixed table">
           <thead>
             <tr>
-              <th>#</th>
-              <th>card number</th>
-              <th>phone</th>
-              <th class="cell center aligned">name</th>
+              <th class="cell num">#</th>
+              <th (click)="sortBy('cardNumber')">
+                <i class="icon sort link" [ngClass]="sortDirectionIcon('cardNumber')"></i>
+                card number
+              </th>
+              <th (click)="sortBy('lastName')">
+                <i class="icon sort link" [ngClass]="sortDirectionIcon('lastName')"></i>
+                name
+              </th>
+              <th (click)="sortBy('phone')">
+                <i class="icon sort link" [ngClass]="sortDirectionIcon('phone')"></i>
+                phone
+              </th>
               <th class="center aligned">actions</th>
             </tr>
           </thead>
-          <tbody>
-            <tr *ngFor="let u of filteredUsers; let i = index">
-              <td>{{i + 1}}</td>
-              <td>
-                {{u.cardNumber}}
-              </td>
-              <td>
-                +{{u.phone}}
-              </td>
-              <td>
-                {{u.name}} {{u.lastName}}
-              </td>
-              <td>
-                <i class="ui large ticket yellow icon link" (click)="viewTicket(u.id)"></i>
-              </td>
-            </tr>
-          </tbody>
+          <tbody users-filter-table [list]="listToShow"></tbody>
         </table>
       </div>
       <div modal-actions>
-        <button class="ui button red" (click)="onCancel()">Закрыть</button>
+        <div class="ui inverted segment">
+          <button class="ui button icon red" (click)="onCancel()"><i class="icon arrow left"></i>Назад</button>
+        </div>
       </div>
     </uiModal>
   `,
-  styles: []
+  styles: [`
+    .ui.form .ui.input.icon input {
+      padding: 1rem;
+      border-radius: 3px;
+    }
+
+    .ui.form .ui.input.icon .icon.search {
+      right: 1rem;
+    }
+
+    .cell.num {
+      width: 2rem;
+    }
+  `]
 })
 @Modal()
 export class UsersCreateTicketModalComponent extends CustomModalComponent implements OnInit {
 
   @Input() eventId: string;
-  users: UserView[] = [];
-  filteredUsers: UserView[] = [];
+
+  query$: Subject<string> = new Subject();
+
+  fullList: UserView[];
+  listToShow: UserView[];
+
   event: EventView;
 
-  searchQuery: string;
+  query: string = '';
+
+  columnToSort: string = 'cardNumber';
+  sortReverse: boolean = false;
 
   constructor(private usersService: UsersService,
               private eventsService: EventsService) {
@@ -88,37 +102,48 @@ export class UsersCreateTicketModalComponent extends CustomModalComponent implem
   }
 
   ngOnInit() {
-    let list = this.usersService.all();
-    // оставим только пользователей без билетов
-    for (let u of list) {
-      let t = u.getTicketByEvent(this.eventId);
-      if (!t) {
-        this.users.push(u);
-        this.filteredUsers.push(u);
-      }
-    }
-
     this.event = this.eventsService.one(this.eventId);
-  }
-
-  viewTicket(id: string) {
-
+    this.fullList = this.usersService.all();
+    this.sortFullList();
+    this.listToShow = this.fullList;
   }
 
   onChangeSearch() {
-    this.updateList();
+
+    if (this.query.length > 0) {
+      this.listToShow = _.filter(this.fullList, (u: UserView) =>
+        u.cardNumber.includes(this.query) ||
+        u.name.includes(this.query) ||
+        u.lastName.includes(this.query) ||
+        u.phone.includes(this.query)
+      );
+      return;
+    }
+    this.listToShow = this.fullList;
   }
 
-  updateList() {
-    this.filteredUsers = this.filter(this.searchQuery);
+  // сортирует исходный список
+  sortFullList() {
+    this.fullList = _.sortBy(this.fullList, this.columnToSort);
+    if (this.sortReverse) this.fullList.reverse();
   }
 
-  filter(query: string): UserView[] {
-    return _.filter(this.users, (u: UserView) =>
-      u.cardNumber.includes(query) ||
-      u.name.includes(query) ||
-      u.lastName.includes(query) ||
-      u.phone.includes(query)
-    );
+  sortBy(by: string) {
+    // если этот же столбик, то меняем направление сортировки
+    this.sortReverse = !this.sortReverse;
+
+    // если выбран другой столбик, то уст. направление сортировки по-умолчанию
+    if (by !== this.columnToSort) this.sortReverse = false;
+
+    this.columnToSort = by;
+    this.sortFullList();
+  }
+
+  sortDirectionIcon(byColumn: string): string {
+    if (byColumn == this.columnToSort) {
+      if (this.sortReverse) return 'down';
+      return 'up';
+    }
+    return '';
   }
 }

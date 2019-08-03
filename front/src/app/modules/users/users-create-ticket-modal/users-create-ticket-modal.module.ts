@@ -5,10 +5,12 @@ import {EventsService} from "@modules/events/services/events.service";
 import {UsersService} from "@modules/users/services/users.service";
 import {ModalModule} from "@modules/ui/modules/modal/modal.module";
 import {FormsModule} from "@angular/forms";
+import {UsersCreateTicketTableRowComponent} from './users-create-ticket-table-row/users-create-ticket-table-row.component';
 
 @NgModule({
   declarations: [
-    UsersCreateTicketModalComponent
+    UsersCreateTicketModalComponent,
+    UsersCreateTicketTableRowComponent
   ],
   imports: [
     CommonModule,

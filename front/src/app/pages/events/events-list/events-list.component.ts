@@ -24,18 +24,15 @@ import * as _ from "underscore";
         <tr>
           <th>#</th>
           <th (click)="sortBy('date')">
-            <i class="icon sort link"
-               [ngClass]="sortDirectionIcon('date')"></i>
+            <i class="icon sort link" [ngClass]="sortDirectionIcon('date')"></i>
             date
           </th>
           <th (click)="sortBy('title')">
-            <i class="icon sort link"
-               [ngClass]="sortDirectionIcon('title')"></i>
+            <i class="icon sort link" [ngClass]="sortDirectionIcon('title')"></i>
             title
           </th>
           <th (click)="sortBy('price')">
-            <i class="icon sort link"
-               [ngClass]="sortDirectionIcon('price')"></i>
+            <i class="icon sort link" [ngClass]="sortDirectionIcon('price')"></i>
             price
           </th>
           <th class="center aligned">actions</th>
@@ -105,7 +102,7 @@ export class EventsListComponent implements OnInit {
 
   sortBy(by: string) {
     // если этот же столбик, то меняем направление сортировки
-    this.toggleReverse();
+    this.sortReverse = !this.sortReverse;
 
     // если выбран другой столбик, то уст. направление сортировки по-умолчанию
     if (by !== this.columnToSort) this.sortReverse = false;
@@ -114,21 +111,11 @@ export class EventsListComponent implements OnInit {
     this.sort();
   }
 
-  toggleReverse() {
-    this.sortReverse = !this.sortReverse;
-  }
-
   sortDirectionIcon(byColumn: string): string {
-    if (this.sortDirection(byColumn) > 0) return 'sort up';
-    if (this.sortDirection(byColumn) < 0) return 'sort down';
-    return 'sort';
-  }
-
-  sortDirection(byColumn: string): number {
     if (byColumn == this.columnToSort) {
-      if (this.sortReverse) return -1;
-      return 1;
+      if (this.sortReverse) return 'down';
+      return 'up';
     }
-    return 0;
+    return '';
   }
 }
