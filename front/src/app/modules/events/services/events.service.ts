@@ -7,6 +7,7 @@ import {environment} from "@env/environment.dev"
 export class EventsService {
   update$: Subject<EventView[]> = new ReplaySubject();
   storageKey = 'events';
+  list: EventView[] = [];
 
   constructor(private http: HttpClient) {
   }
@@ -18,6 +19,11 @@ export class EventsService {
       result.push(new EventView(i))
     }
     return result;
+  }
+
+  one(id: string): EventView {
+    let list = this.all();
+    return list.find((e: EventView) => e.id == id)
   }
 
   fetch() {

@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {EventsService, EventView} from "@modules/events/services/events.service";
 import {CustomModalService} from "@modules/ui/modules/modal/shared/services/custom-modal.service";
-import {EventsCreateModalComponent} from "../events-create-modal/events-create-modal.component";
+import {EventsCreateModalComponent} from "../../../modules/events/events-create-modal/events-create-modal.component";
+import {EventsSingleModalComponent} from "@modules/events/events-single-modal/events-single-modal.component";
 
 @Component({
   selector: 'app-events-list',
@@ -39,6 +40,7 @@ import {EventsCreateModalComponent} from "../events-create-modal/events-create-m
           <td>{{e.modifyAt}}</td>
           <td>
             <i class="large pencil icon link gray" [routerLink]="['single/' + e.id]" title="Редактировать"></i>
+            <i class="large eye icon link gray" (click)="view(e.id)" title="Открыть"></i>
             &nbsp;&nbsp;&nbsp;&nbsp;
           </td>
         </tr>
@@ -68,6 +70,10 @@ export class EventsListComponent implements OnInit {
     this.modal.create(EventsCreateModalComponent, {
       onClose: () => this.events.fetch()
     })
+  }
+
+  view(id: string) {
+    this.modal.create(EventsSingleModalComponent, {id: id})
   }
 
 }

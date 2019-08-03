@@ -41,11 +41,13 @@ import {UsersService, UserView} from "@modules/users/services/users.service";
           <td>
             <i class="large pencil icon link gray" [routerLink]="['single/' + u.id]" title="Редактировать"></i>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <i class="large ticket icon link green" (click)="createTicket(u, 34234)"></i>
+            <i class="large ticket icon link green" (click)="createTicket(u, '5d44e4ad3f096b506d5016dc')"></i>
           </td>
         </tr>
       </tbody>
     </table>
+    <uiModalPlaceholder></uiModalPlaceholder>
+    <uiMessages></uiMessages>
   `,
   styles: []
 })

@@ -1,9 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Modal} from "@modules/ui/modules/modal/components/custom-modal/custom-modal.container";
-import {CustomModalComponent} from "@modules/ui/modules/modal/components/custom-modal/custom-modal.component";
+import {Modal} from "../../ui/modules/modal/components/custom-modal/custom-modal.container";
+import {CustomModalComponent} from "../../ui/modules/modal/components/custom-modal/custom-modal.component";
 import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
-import {EventsService, EventView} from "@modules/events/services/events.service";
-import {MessagesService} from "@modules/ui/modules/messages/messages.service";
+import {EventsService, EventView} from "../services/events.service";
+import {MessagesService} from "../../ui/modules/messages/messages.service";
 
 @Component({
   selector: 'app-events-create-modal',
