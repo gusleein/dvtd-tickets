@@ -92,7 +92,7 @@ func (users) CreateTicket(userId, partyId string) (ticket Ticket, err error) {
 	ticket.PartyId = partyId
 	ticket.Uid = uid.String()
 	ticket.SoldAt = time.Now().Unix()
-	ticket.QRLink = ticket.GetQrCodeUri()
+	ticket.QRLink = config.Local.Get("uploads") + "/" + ticket.Uid + ".png"
 
 	user.Tickets = append(user.Tickets, ticket)
 	// todo: добавить транзакцию если продажа билета происходит

@@ -8,9 +8,9 @@ import (
 	"github.com/valyala/fasthttprouter"
 )
 
-func QRCreate(ctx *fasthttp.RequestCtx, ps fasthttprouter.Params) {
-	userId := string(ps.ByName("userId"))
-	partyId := string(ps.ByName("partyId"))
+func QRCreate(ctx *fasthttp.RequestCtx, _ fasthttprouter.Params) {
+	userId := string(ctx.QueryArgs().Peek("user"))
+	partyId := string(ctx.QueryArgs().Peek("party"))
 
 	ticket, err := db.Users.CreateTicket(userId, partyId)
 	path := ticket.GetQrCodeUri()

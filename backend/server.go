@@ -45,7 +45,7 @@ func main() {
 
 	r.GET("/books/view", web.BooksView)
 
-	r.GET("/qr/create/:userId/:partyId", web.QRCreate)
+	r.GET("/qr/create", web.QRCreate)
 
 	// admin
 	r.POST("/books/save", web.Admin(web.BooksSave))
