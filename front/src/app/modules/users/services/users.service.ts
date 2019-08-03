@@ -23,15 +23,8 @@ export class UsersService {
   createTicket(userId: string, partyId: string) {
     this.createQR(userId, partyId)
       .toPromise()
-      .then((t: Ticket) => {
-        let user = this.all().find((u: UserView) => u.id == userId);
-        // ищем вечеринку по id, если такой нет, то добавляем новый тикет
-        let ticket = user.tickets.find((t: Ticket) => t.partyId == partyId);
-        if (!ticket) {
-          user.tickets.push(t)
-        }
-        this.updateStorage(this.all());
-        this.update$.next(this.all());
+      .then(() => {
+        this.fetch()
       })
   }
 
@@ -53,7 +46,7 @@ export class UsersService {
   }
 
   private createQR(userId: string, partyId: string): Observable<Ticket> {
-    return this.http.get<Ticket>(environment.endpoint + `/qr/create`);
+    return this.http.get<Ticket>(environment.endpoint + `/qr/create?user=` + userId + `&party=` + partyId);
   }
 }
 

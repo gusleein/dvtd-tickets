@@ -33,14 +33,14 @@ import {UsersService, UserView} from "@modules/users/services/users.service";
             <div *ngFor="let t of u.tickets">
               <span>{{t.uid}}</span><br>
               <span>{{t.partyId}}</span><br>
-              <span>{{t.qrLink}}</span><br>
+              <a target="_blank" [href]="t.qrLink">{{t.qrLink}}</a><br>
               <span>{{t.soldAt}}</span><br>
             </div>
           </td>
           <td>
             <i class="large pencil icon link gray" [routerLink]="['single/' + u.id]" title="Редактировать"></i>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <i class="large ticket icon link green" (click)="createTicket(u, 123123333)"></i>
+            <i class="large ticket icon link green" (click)="createTicket(u, 34234)"></i>
           </td>
         </tr>
       </tbody>
