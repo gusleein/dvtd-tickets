@@ -24,7 +24,7 @@ import * as _ from "underscore";
         <tr>
           <th>#</th>
           <th>
-            <i class="icon sort link" (click)="sortBy('date')"></i>
+            <i class="icon sort up link" (click)="sortBy('date')"></i>
             date
           </th>
           <th>
