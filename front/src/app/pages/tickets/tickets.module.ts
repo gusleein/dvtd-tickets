@@ -11,6 +11,7 @@ import {CustomModalModule} from "@modules/ui/modules/modal/components/custom-mod
 import {UsersTicketModalModule} from "@modules/users/users-ticket-modal/users-ticket-modal.module";
 import {UsersSingleModalModule} from "@modules/users/users-single-modal/users-single-modal.module";
 import {UsersCreateTicketModalModule} from "@modules/users/users-create-ticket-modal/users-create-ticket-modal.module";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [TicketsComponent],
@@ -18,6 +19,7 @@ import {UsersCreateTicketModalModule} from "@modules/users/users-create-ticket-m
     CommonModule,
     HttpClientModule,
     MessagesModule,
+    FormsModule,
 
     UsersTicketModalModule,
     UsersSingleModalModule,
