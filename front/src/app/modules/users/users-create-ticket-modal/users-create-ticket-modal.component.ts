@@ -4,7 +4,6 @@ import {CustomModalComponent} from "@modules/ui/modules/modal/components/custom-
 import {UsersService, UserView} from "@modules/users/services/users.service";
 import {EventsService, EventView} from "@modules/events/services/events.service";
 import * as _ from "underscore"
-import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-users-create-ticket-modal',
@@ -54,7 +53,7 @@ import {Subject} from "rxjs";
               <th class="center aligned">actions</th>
             </tr>
           </thead>
-          <tbody users-filter-table [list]="listToShow"></tbody>
+          <tbody users-filter-table [list]="listToShow" [eventId]="event.id" (close)="onCancel()"></tbody>
         </table>
       </div>
       <div modal-actions>
@@ -84,8 +83,6 @@ export class UsersCreateTicketModalComponent extends CustomModalComponent implem
 
   @Input() eventId: string;
 
-  query$: Subject<string> = new Subject();
-
   fullList: UserView[];
   listToShow: UserView[];
 
@@ -102,6 +99,13 @@ export class UsersCreateTicketModalComponent extends CustomModalComponent implem
   }
 
   ngOnInit() {
+    this.usersService.update$.subscribe(() => {
+      this.fullList = this.usersService.all();
+      this.sortFullList();
+      this.filter();
+    });
+    this.usersService.fetch();
+
     this.event = this.eventsService.one(this.eventId);
     this.fullList = this.usersService.all();
     this.sortFullList();
@@ -109,17 +113,20 @@ export class UsersCreateTicketModalComponent extends CustomModalComponent implem
   }
 
   onChangeSearch() {
-
     if (this.query.length > 0) {
-      this.listToShow = _.filter(this.fullList, (u: UserView) =>
-        u.cardNumber.includes(this.query) ||
-        u.name.includes(this.query) ||
-        u.lastName.includes(this.query) ||
-        u.phone.includes(this.query)
-      );
+      this.filter();
       return;
     }
     this.listToShow = this.fullList;
+  }
+
+  filter() {
+    this.listToShow = _.filter(this.fullList, (u: UserView) =>
+      u.cardNumber.includes(this.query) ||
+      u.name.includes(this.query) ||
+      u.lastName.includes(this.query) ||
+      u.phone.includes(this.query)
+    );
   }
 
   // сортирует исходный список

@@ -1,11 +1,13 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {UsersService, UserView} from "@modules/users/services/users.service";
-import {EventsService} from "@modules/events/services/events.service";
+import {EventsService, EventView} from "@modules/events/services/events.service";
+import {CustomModalService} from "@modules/ui/modules/modal/shared/services/custom-modal.service";
+import {MessagesService} from "@modules/ui/modules/messages/messages.service";
 
 @Component({
   selector: 'app-users-create-ticket-table-row,[users-filter-table]',
   template: `
-    <tr *ngFor="let u of list; let i = index" (click)="createTicket(u.id)">
+    <tr *ngFor="let u of list; let i = index">
       <td>{{i + 1}}</td>
       <td>
         {{u.cardNumber}}
@@ -17,7 +19,13 @@ import {EventsService} from "@modules/events/services/events.service";
         {{u.name}} {{u.lastName}}
       </td>
       <td>
-        <i class="ui large ticket yellow icon link" (click)="viewTicket(u.id)"></i>
+        <i class="ui large icons link"
+           *ngIf="!u.getTicketByEvent(eventId)"
+           (click)="openAddTicketModal(u)"
+           title="Оформить билет">
+          <i class="ticket yellow icon"></i>
+          <i class="bottom right corner green add icon"></i>
+        </i>
       </td>
     </tr>
   `,
@@ -26,20 +34,29 @@ import {EventsService} from "@modules/events/services/events.service";
 export class UsersCreateTicketTableRowComponent implements OnInit {
 
   @Input() list: UserView[];
+  @Input() eventId: string;
+  @Output() close: EventEmitter<void> = new EventEmitter();
+
+  event: EventView;
+
 
   constructor(private users: UsersService,
+              private modal: CustomModalService,
+              private messages: MessagesService,
               private events: EventsService) {
   }
 
   ngOnInit() {
+    this.event = this.events.one(this.eventId)
   }
 
-  viewTicket(id: string) {
-
+  openAddTicketModal(u: UserView) {
+    let result = confirm(`Оформить билет на ${this.event.title} за ${this.event.price} руб?`);
+    if (result) {
+      this.users.createTicket(u.id, this.eventId, this.event.price);
+      this.users.fetch();
+      this.close.emit();
+      this.messages.success('Билет оформлен!')
+    }
   }
-
-  createTicket(id, eventId) {
-
-  }
-
 }

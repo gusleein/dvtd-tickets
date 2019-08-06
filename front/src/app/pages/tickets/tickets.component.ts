@@ -84,13 +84,18 @@ export class TicketsComponent implements OnInit {
       this.event = this.eventsService.upcoming();
     });
 
+    // подписываемся на покупку билетов
+    this.usersService.update$.subscribe(() => {
+      this.soldUsers = this.usersService.filterUsersByEvent(this.event.id);
+    });
+    this.usersService.fetch();
+
     this.event = this.eventsService.upcoming();
     this.date = (new Date(this.event.date * 1000)).toISOString().slice(0, 10);
 
     // проходим по списку пользователей и получаем проданные билеты на текущее событие
     this.soldUsers = this.usersService.filterUsersByEvent(this.event.id);
     console.log(this.soldUsers)
-
   }
 
   viewUser(id: string) {

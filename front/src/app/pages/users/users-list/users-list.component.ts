@@ -42,7 +42,7 @@ import {UsersSingleModalComponent} from "@modules/users/users-single-modal/users
           <td>
             <i class="large pencil icon link gray" [routerLink]="['single/' + u.id]" title="Редактировать"></i>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <i class="large ticket icon link green" (click)="createTicket(u, '5d44e7243f096b506d5016de')"></i>
+            <i class="large ticket icon link green" (click)="createTicket(u, '5d44e7243f096b506d5016de', 600)"></i>
           </td>
         </tr>
       </tbody>
@@ -67,8 +67,8 @@ export class UsersListComponent implements OnInit {
     this.users.fetch();
   }
 
-  createTicket(u: UserView, eventId: string) {
-    this.users.createTicket(u.id, eventId)
+  createTicket(u: UserView, eventId: string, price: number) {
+    this.users.createTicket(u.id, eventId, price)
   }
 
   viewEvent(id: string) {

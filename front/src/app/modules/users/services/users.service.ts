@@ -42,19 +42,24 @@ export class UsersService {
     return result;
   }
 
-  createTicket(userId: string, eventId: string) {
-    this.createQR(userId, eventId)
-      .toPromise()
-      .then(() => {
-        this.fetch()
-      })
-  }
-
   private updateStorage(items) {
     localStorage.setItem(this.storageKey, JSON.stringify(items));
   }
 
-  fetch() {
+  createTicket(userId: string, eventId: string, price: number): Observable<Ticket> {
+    let finish$: Subject<Ticket> = new Subject();
+    this.generateTicket(userId, eventId, price)
+      .toPromise()
+      .then(() => {
+        this.fetch()
+      })
+      .catch(() => {
+        this.fetch()
+      });
+    return finish$.asObservable();
+  }
+
+  fetch(fin?: Subject<UserView[]>) {
     this.getAll()
       .toPromise()
       .then((items: UserView[]) => {
@@ -67,8 +72,13 @@ export class UsersService {
     return this.http.get<UserView[]>(environment.endpoint + '/user/list');
   }
 
-  private createQR(userId: string, eventId: string): Observable<Ticket> {
-    return this.http.get<Ticket>(environment.endpoint + `/qr/create?user=` + userId + `&event=` + eventId);
+  private generateTicket(uId: string, eId: string, price: number): Observable<Ticket> {
+    return this.http.get<Ticket>(
+      environment.endpoint
+      + `/tickets/create?user=${uId}`
+      + `&event=${eId}`
+      + `&price=${price}
+      `);
   }
 }
 
