@@ -16,7 +16,9 @@ import {Modal} from "../custom-modal/custom-modal.container";
             <div class="ui active inverted dimmer" *ngIf="isLoading">
               <div class="ui loader"></div>
             </div>
-            <ng-content select="[modal-content]"></ng-content>
+            <div class="ui basic segment">
+              <ng-content select="[modal-content]"></ng-content>
+            </div>
           </div>
         </div>
         <div class="actions">

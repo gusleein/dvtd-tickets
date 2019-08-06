@@ -46,6 +46,29 @@ export class UsersService {
     localStorage.setItem(this.storageKey, JSON.stringify(items));
   }
 
+  getTickets(userId: string): Ticket[] {
+    let u = this.one(userId);
+    return u.tickets;
+  }
+
+  getTicketByEvent(userId: string, eventId: string): Ticket {
+    let u = this.one(userId);
+    return u.tickets.find((t: Ticket) => t.eventId == eventId);
+  }
+
+  getAllTicketsByEvent(eventId: string): Ticket[] {
+    let users = this.all();
+    let tickets: Ticket[] = [];
+    for (let u of users) {
+      for (let t of u.tickets) {
+        if (t.eventId == eventId) {
+          tickets.push(t)
+        }
+      }
+    }
+    return tickets
+  }
+
   createTicket(userId: string, eventId: string, price: number): Observable<Ticket> {
     let finish$: Subject<Ticket> = new Subject();
     this.generateTicket(userId, eventId, price)
@@ -66,6 +89,10 @@ export class UsersService {
         this.updateStorage(items);
         this.update$.next(this.all());
       })
+  }
+
+  save(u: UserView): Promise<any> {
+    return this.http.post(environment.endpoint + '/user/save', u).toPromise();
   }
 
   private getAll(): Observable<UserView[]> {

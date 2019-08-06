@@ -47,8 +47,9 @@ import * as _ from "underscore";
             </div>
           </div>
         </div>
-        <h2 class="page-header"></h2>
       </div>
+    </div>
+    <div class="ui basic segment">
       <table class="ui inverted unstackable fixed striped table">
         <thead>
           <tr>
@@ -81,8 +82,9 @@ import * as _ from "underscore";
           </tr>
         </tbody>
       </table>
-      <uiModalPlaceholder></uiModalPlaceholder>
-      <uiMessages></uiMessages>
+    </div>
+    <uiModalPlaceholder></uiModalPlaceholder>
+    <uiMessages></uiMessages>
   `,
   styles: []
 })

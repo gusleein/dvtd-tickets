@@ -9,6 +9,8 @@ import {CustomModalModule} from "@modules/ui/modules/modal/components/custom-mod
 import {MessagesModule} from "@modules/ui/modules/messages/messages.module";
 import {EventsSingleModalModule} from "@modules/events/events-single-modal/events-single-modal.module";
 import {UsersSingleModalModule} from "@modules/users/users-single-modal/users-single-modal.module";
+import {UsersTicketListModalModule} from "@modules/users/users-ticket-list-modal/users-ticket-list-modal.module";
+import {UsersEditModalModule} from "@modules/users/users-edit-modal/users-edit-modal.module";
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import {UsersSingleModalModule} from "@modules/users/users-single-modal/users-si
     UsersRoutingModule,
     EventsSingleModalModule,
     UsersSingleModalModule,
-
+    UsersEditModalModule,
+    UsersTicketListModalModule,
     CustomModalModule,
     MessagesModule,
   ],

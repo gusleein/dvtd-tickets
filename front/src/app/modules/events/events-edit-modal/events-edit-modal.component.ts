@@ -138,7 +138,6 @@ export class EventsEditModalComponent extends CustomModalComponent implements On
   }
 
   save() {
-    console.log(this.form.value);
     if (this.form.invalid) return;
     this.isSubmitting = true;
 
