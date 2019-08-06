@@ -114,13 +114,23 @@ export class UsersEditModalComponent extends CustomModalComponent implements OnI
   }
 
   ngOnInit() {
-    this.user = this.users.one(this.id);
+    if (this.id) {
+      this.user = this.users.one(this.id);
+
+      this.form = new FormGroup({
+        'cardNumber': new FormControl(this.user.cardNumber, []),
+        'name': new FormControl(this.user.name, [Validators.required]),
+        'lastName': new FormControl(this.user.lastName, [Validators.required]),
+        'phone': new FormControl(this.user.phone, [Validators.required]),
+      });
+      return;
+    }
 
     this.form = new FormGroup({
-      'cardNumber': new FormControl(this.user.cardNumber, []),
-      'name': new FormControl(this.user.name, [Validators.required]),
-      'lastName': new FormControl(this.user.lastName, [Validators.required]),
-      'phone': new FormControl(this.user.phone, [Validators.required]),
+      'cardNumber': new FormControl('', []),
+      'name': new FormControl('', [Validators.required]),
+      'lastName': new FormControl('', [Validators.required]),
+      'phone': new FormControl('+7', [Validators.required]),
     })
   }
 

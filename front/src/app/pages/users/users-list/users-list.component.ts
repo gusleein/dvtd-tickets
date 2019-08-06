@@ -9,8 +9,19 @@ import {UsersEditModalComponent} from "@modules/users/users-edit-modal/users-edi
 @Component({
   selector: 'app-users-list',
   template: `
-    <div class="ui basic segment">
-      <h2 class="page-header">Users</h2>
+    <div class="ui grid">
+      <div class="ten wide column">
+        <div class="ui basic segment">
+          <h2 class="page-header">Users</h2>
+        </div>
+      </div>
+      <div class="six wide column">
+
+        <div class="ui basic segment">
+          <button class="ui large icon blue button" (click)="addUser()"><i class="icon plus"></i>Добавить пользователя
+          </button>
+        </div>
+      </div>
     </div>
 
     <table class="ui inverted unstackable striped table">
@@ -73,4 +84,11 @@ export class UsersListComponent implements OnInit {
       onClose: () => this.users.fetch()
     })
   }
+
+  addUser() {
+    this.modal.create(UsersEditModalComponent, {
+      onClose: () => this.users.fetch()
+    })
+  }
 }
+
