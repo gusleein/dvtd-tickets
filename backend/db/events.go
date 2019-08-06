@@ -8,10 +8,14 @@ import (
 type Event struct {
 	Id        bson.ObjectId `json:"id" bson:"_id,omitempty"`
 	Title     string        `json:"title"`
-	Price     float64       `json:"price"`
+	Price     int           `json:"price"`
 	Date      int64         `json:"date"`
 	CreatedAt int64         `json:"createdAt"`
 	ModifyAt  int64         `json:"modifyAt"`
+	StartDate int64         `json:"startDate"`
+	Duration  int64         `json:"duration"`
+	StartTime int64         `json:"startTime"`
+	EndTime   int64         `json:"endTime"`
 }
 
 func (events) All() (list []Event, err error) {

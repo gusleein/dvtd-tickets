@@ -11,8 +11,9 @@ import (
 func QRCreate(ctx *fasthttp.RequestCtx, _ fasthttprouter.Params) {
 	userId := string(ctx.QueryArgs().Peek("user"))
 	eventId := string(ctx.QueryArgs().Peek("event"))
+	price := ctx.QueryArgs().GetUintOrZero("price")
 
-	ticket, err := db.Users.CreateTicket(userId, eventId)
+	ticket, err := db.Users.CreateTicket(userId, eventId, price)
 	path := ticket.GetQrCodeUri()
 
 	if err != nil {

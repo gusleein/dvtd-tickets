@@ -39,11 +39,11 @@ type User struct {
 }
 
 type Ticket struct {
-	Uid     string  `json:"uid"`
-	EventId string  `json:"eventId"`
-	SoldAt  int64   `json:"soldAt"`
-	QRLink  string  `json:"qrLink"`
-	Price   float64 `json:"price"`
+	Uid     string `json:"uid"`
+	EventId string `json:"eventId"`
+	SoldAt  int64  `json:"soldAt"`
+	QRLink  string `json:"qrLink"`
+	Price   int    `json:"price"`
 }
 
 func (t *Ticket) GetQrCodeUri() string {
@@ -77,7 +77,7 @@ func (users) All(lu int) (list []User, err error) {
 	return
 }
 
-func (users) CreateTicket(userId, eventId string) (ticket Ticket, err error) {
+func (users) CreateTicket(userId, eventId string, price int) (ticket Ticket, err error) {
 	user := User{}
 	// если у пользователя сгенерирован qr код на выбранную вечеринку, то отдаем ошибку
 	err = DBUsers.Find(bson.M{"_id": bson.ObjectIdHex(userId)}).One(&user)
