@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 
 import {TicketsRoutingModule} from './tickets-routing.module';
 import {TicketsComponent} from './tickets.component';
-import {UsersService} from "@modules/users/services/users.service";
+import {UsersService} from "@modules/users/users.service";
 import {EventsService} from "@modules/events/services/events.service";
 import {HttpClientModule} from "@angular/common/http";
 import {MessagesModule} from "@modules/ui/modules/messages/messages.module";

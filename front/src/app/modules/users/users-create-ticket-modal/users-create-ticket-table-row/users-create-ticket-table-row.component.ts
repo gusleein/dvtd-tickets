@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {UsersService, UserView} from "@modules/users/services/users.service";
+import {UsersService, UserView} from "@modules/users/users.service";
 import {EventsService, EventView} from "@modules/events/services/events.service";
 import {CustomModalService} from "@modules/ui/modules/modal/shared/services/custom-modal.service";
 import {MessagesService} from "@modules/ui/modules/messages/messages.service";
@@ -16,7 +16,7 @@ import {MessagesService} from "@modules/ui/modules/messages/messages.service";
         +{{u.phone}}
       </td>
       <td>
-        {{u.name}} {{u.lastName}}
+        {{u.name}}
       </td>
       <td>
         <i class="ui large icons link"

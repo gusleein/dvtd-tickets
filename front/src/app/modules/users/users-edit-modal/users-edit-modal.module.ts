@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {UsersEditModalComponent} from './users-edit-modal.component';
 import {ModalModule} from "@modules/ui/modules/modal/modal.module";
 import {ReactiveFormsModule} from "@angular/forms";
-import {UsersService} from "@modules/users/services/users.service";
+import {UsersService} from "@modules/users/users.service";
 
 @NgModule({
   declarations: [UsersEditModalComponent],

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {UsersService, UserView} from "@modules/users/services/users.service";
+import {UsersService, UserView} from "@modules/users/users.service";
 import {CustomModalService} from "@modules/ui/modules/modal/shared/services/custom-modal.service";
 import {EventsSingleModalComponent} from "@modules/events/events-single-modal/events-single-modal.component";
 import {UsersSingleModalComponent} from "@modules/users/users-single-modal/users-single-modal.component";
@@ -37,7 +37,7 @@ import {UsersEditModalComponent} from "@modules/users/users-edit-modal/users-edi
         <tr *ngFor="let u of list">
           <td>{{u.cardNumber}}</td>
           <td>+{{u.phone}}</td>
-          <td>{{u.name}} {{u.lastName}}</td>
+          <td>{{u.name}}</td>
           <td>
             <i class="large pencil icon link gray" (click)="editUser(u.id)" title="Редактировать"></i>
             <i class="large ticket icon link green" (click)="showTickets(u.id)"></i>

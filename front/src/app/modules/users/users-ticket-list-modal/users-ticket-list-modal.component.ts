@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Modal} from "@modules/ui/modules/modal/components/custom-modal/custom-modal.container";
 import {CustomModalComponent} from "@modules/ui/modules/modal/components/custom-modal/custom-modal.component";
-import {Ticket, UsersService} from "@modules/users/services/users.service";
+import {Ticket, UsersService} from "@modules/users/users.service";
 import {EventsService, EventView} from "@modules/events/services/events.service";
 import * as helpers from "@core/shared/helpers"
 

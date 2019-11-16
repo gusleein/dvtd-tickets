@@ -59,7 +59,7 @@
 --------------------*/
 
 @primaryColor: @orange;
-@secondaryColor: @darkTwo;
+@secondaryColor: @white,;
 
 @lightPrimaryColor: @lightOrange;
 @lightSecondaryColor: @lightBlack;

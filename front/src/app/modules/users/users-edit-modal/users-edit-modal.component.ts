@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {CustomModalComponent} from "@modules/ui/modules/modal/components/custom-modal/custom-modal.component";
 import {Modal} from "@modules/ui/modules/modal/components/custom-modal/custom-modal.container";
-import {UsersService, UserView} from "@modules/users/services/users.service";
+import {UsersService, UserView} from "@modules/users/users.service";
 import {EventsService} from "@modules/events/services/events.service";
 import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MessagesService} from "@modules/ui/modules/messages/messages.service";
@@ -49,22 +49,6 @@ import {MessagesService} from "@modules/ui/modules/messages/messages.service";
             </div>
           </div>
 
-          <!-- Last Name -->
-          <div class="field">
-            <div class="label">Фамилия *</div>
-            <div class="ui icon input">
-              <input type="text"
-                     formControlName="lastName"
-                     tabindex="1"
-                     autocomplete="off">
-            </div>
-            <div class="error-message" *ngIf="!lastName.valid && !lastName.pristine">
-              <div *ngIf="lastName.errors['required']">
-                Обязательное поле
-              </div>
-            </div>
-          </div>
-
           <!-- Phone -->
           <div class="field">
             <div class="label">Номер телефона *</div>
@@ -102,7 +86,7 @@ export class UsersEditModalComponent extends CustomModalComponent implements OnI
   @Input() id: string;
   @Input() onClose: Function;
 
-  user: UserView;
+  user: UserView = new UserView();
 
   form: FormGroup;
   isSubmitting: boolean = false;
@@ -116,22 +100,13 @@ export class UsersEditModalComponent extends CustomModalComponent implements OnI
   ngOnInit() {
     if (this.id) {
       this.user = this.users.one(this.id);
-
-      this.form = new FormGroup({
-        'cardNumber': new FormControl(this.user.cardNumber, []),
-        'name': new FormControl(this.user.name, [Validators.required]),
-        'lastName': new FormControl(this.user.lastName, [Validators.required]),
-        'phone': new FormControl(this.user.phone, [Validators.required]),
-      });
-      return;
     }
 
     this.form = new FormGroup({
-      'cardNumber': new FormControl('', []),
-      'name': new FormControl('', [Validators.required]),
-      'lastName': new FormControl('', [Validators.required]),
-      'phone': new FormControl('+7', [Validators.required]),
-    })
+      'cardNumber': new FormControl(this.user.cardNumber, []),
+      'name': new FormControl(this.user.name, [Validators.required]),
+      'phone': new FormControl(this.user.phone || '+7', [Validators.required]),
+    });
   }
 
   get cardNumber(): AbstractControl {
@@ -140,10 +115,6 @@ export class UsersEditModalComponent extends CustomModalComponent implements OnI
 
   get name(): AbstractControl {
     return this.form.get('name')
-  }
-
-  get lastName(): AbstractControl {
-    return this.form.get('lastName')
   }
 
   get phone(): AbstractControl {

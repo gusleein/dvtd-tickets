@@ -4,7 +4,7 @@ import {SellTicketConfirmModalComponent} from './sell-ticket-confirm-modal.compo
 import {ModalModule} from "@modules/ui/modules/modal/modal.module";
 import {FormsModule} from "@angular/forms";
 import {EventsService} from "@modules/events/services/events.service";
-import {UsersService} from "@modules/users/services/users.service";
+import {UsersService} from "@modules/users/users.service";
 
 @NgModule({
   declarations: [SellTicketConfirmModalComponent],

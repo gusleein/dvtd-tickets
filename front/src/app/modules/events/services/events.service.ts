@@ -32,7 +32,7 @@ export class EventsService {
     let list = this.all();
     // сегодня +2 дня
     let now = Date.now() + 2 * 24 * 3600 * 1000;
-    return list.find((e: EventView) => e.date * 1000 < now)
+    return list.find((e: EventView) => e.date * 1000 > now)
   }
 
   fetch() {

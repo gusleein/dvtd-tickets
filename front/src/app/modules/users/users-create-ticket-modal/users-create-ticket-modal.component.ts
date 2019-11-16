@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Modal} from "@modules/ui/modules/modal/components/custom-modal/custom-modal.container";
 import {CustomModalComponent} from "@modules/ui/modules/modal/components/custom-modal/custom-modal.component";
-import {UsersService, UserView} from "@modules/users/services/users.service";
+import {UsersService, UserView} from "@modules/users/users.service";
 import {EventsService, EventView} from "@modules/events/services/events.service";
 import * as _ from "underscore"
 
@@ -124,7 +124,6 @@ export class UsersCreateTicketModalComponent extends CustomModalComponent implem
     this.listToShow = _.filter(this.fullList, (u: UserView) =>
       u.cardNumber.includes(this.query) ||
       u.name.includes(this.query) ||
-      u.lastName.includes(this.query) ||
       u.phone.includes(this.query)
     );
   }

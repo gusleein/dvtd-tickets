@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {EventsService, EventView} from "@modules/events/services/events.service";
-import {UsersService, UserView} from "@modules/users/services/users.service";
+import {UsersService, UserView} from "@modules/users/users.service";
 import {MessagesService} from "@modules/ui/modules/messages/messages.service";
 import {CustomModalService} from "@modules/ui/modules/modal/shared/services/custom-modal.service";
 import {UsersSingleModalComponent} from "@modules/users/users-single-modal/users-single-modal.component";
@@ -72,7 +72,7 @@ import * as _ from "underscore";
               +{{u.phone}}
             </td>
             <td>
-              <a (click)="viewUser(u.id)">{{u.name}} {{u.lastName}}</a>
+              <a (click)="viewUser(u.id)">{{u.name}}</a>
             </td>
             <td>{{u.getTicketDate(event.id)}}</td>
             <td>{{u.getTicketPrice(event.id)}}.00 руб.</td>
@@ -139,7 +139,6 @@ export class TicketsComponent implements OnInit {
     this.listToShow = _.filter(this.soldUsers, (u: UserView) =>
       u.cardNumber.includes(this.query) ||
       u.name.includes(this.query) ||
-      u.lastName.includes(this.query) ||
       u.phone.includes(this.query)
     );
   }

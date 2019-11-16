@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
 import {Observable, ReplaySubject, Subject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
-import {environment} from "@env/environment.dev"
-import * as helpers from "@core/shared/helpers";
+import {environment} from "../../../environments/environment.dev"
+import * as helpers from "../core/shared/helpers";
 
 @Injectable()
 export class UsersService {
@@ -112,7 +112,6 @@ export class UsersService {
 export class UserView {
   public phone: string = '';
   public name: string = '';
-  public lastName: string = '';
   public cardNumber: string = '';
   public tickets: Ticket[] = [];
 
@@ -122,7 +121,6 @@ export class UserView {
     if (u) {
       this.phone = u.phone;
       this.name = u.name;
-      this.lastName = u.lastName;
       this.cardNumber = u.cardNumber;
       this.tickets = u.tickets;
       this.id = u.id;
