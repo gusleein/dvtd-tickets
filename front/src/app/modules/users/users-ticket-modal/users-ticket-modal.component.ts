@@ -1,9 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from "@angular/core";
 import {Ticket, UsersService, UserView} from "@modules/users/users.service";
 import {EventsService, EventView} from "@modules/events/services/events.service";
 import {Modal} from "@modules/ui/modules/modal/components/custom-modal/custom-modal.container";
 import {CustomModalComponent} from "@modules/ui/modules/modal/components/custom-modal/custom-modal.component";
-import * as helpers from "@core/shared/helpers"
+import * as helpers from "@core/shared/helpers";
 
 @Component({
   selector: 'app-users-ticket-modal',
@@ -34,7 +34,7 @@ import * as helpers from "@core/shared/helpers"
               <span class="ui red label">Номер билета:</span>
               <span>{{ticket.uid}}</span><br>
               <span class="ui red label">Владелец:</span>
-              <span>{{user.name}} {{user.lastName}}</span><br>
+              <span>{{user.name}}</span><br>
               <span class="ui red label">Оплата:</span>
               <span>оплачено {{ticket.price}} руб. {{soldAt}}</span><br>
             </div>

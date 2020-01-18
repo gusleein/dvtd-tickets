@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from "@angular/core";
 import {CustomModalComponent} from "@modules/ui/modules/modal/components/custom-modal/custom-modal.component";
 import {Modal} from "@modules/ui/modules/modal/components/custom-modal/custom-modal.container";
 import {UsersService, UserView} from "@modules/users/users.service";
@@ -18,7 +18,7 @@ import {UsersService, UserView} from "@modules/users/users.service";
         </div>
         <div class="ui basic segment">
           <div class="header">Имя:</div>
-          <div class="content">{{model.name}} {{model.lastName}}</div>
+          <div class="content">{{model.name}}</div>
         </div>
         <div class="ui basic segment">
           <div class="header">Номер телефона:</div>
